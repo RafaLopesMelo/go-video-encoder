@@ -8,7 +8,11 @@ type MySqlVideosRepository struct {
     connection *Connection
 }
 
-func (r *MySqlVideosRepository) findByID() *entities.Video {
+func (repo *MySqlVideosRepository) Save() error {
+    return nil
+}
+
+func (repo *MySqlVideosRepository) FindByID() *entities.Video {
     return entities.NewVideo()
 }
 

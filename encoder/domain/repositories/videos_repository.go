@@ -1,5 +1,8 @@
 package repositories
 
+import "github.com/RafaLopesMelo/go-video-encoder/domain/entities"
+
 type VideosRepository interface {
-	findByID()
+    Save(video *entities.Video) error
+	findByID() *entities.Video
 }
