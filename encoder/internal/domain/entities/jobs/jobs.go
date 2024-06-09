@@ -1,8 +1,9 @@
-package entities
+package jobs
 
 import (
 	"time"
 
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/videos"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects"
 )
 
@@ -10,13 +11,13 @@ type Job struct {
     ID                  value_objects.UniqueEntityID
     OutputBucketPath    string
     Status              string
-    Video               *Video
+    Video               *videos.Video
     Error               string
     CreatedAt           time.Time
     UpdatedAt           time.Time   
 }
 
-func NewJob(output string, status string, video *Video) (*Job, error) {
+func NewJob(output string, status string, video *videos.Video) (*Job, error) {
     job := Job{
         OutputBucketPath: output,
         Status: status,

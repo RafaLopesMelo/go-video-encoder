@@ -1,7 +1,7 @@
 package mysql
 
 import (
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/videos"
 )
 
 type MySqlVideosRepository struct {
@@ -12,8 +12,8 @@ func (repo *MySqlVideosRepository) Save() error {
 	return nil
 }
 
-func (repo *MySqlVideosRepository) FindByID() *entities.Video {
-	return entities.NewVideo()
+    func (repo *MySqlVideosRepository) FindByID() *videos.Video {
+    return nil
 }
 
 func NewMysqlVideosRepository(connection *Connection) *MySqlVideosRepository {

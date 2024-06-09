@@ -1,8 +1,10 @@
 package repositories
 
-import "github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities"
+import (
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/jobs"
+)
 
 type JobsRepository interface {
-	Save(job *entities.Job) error
-	findByID() *entities.Job
+	Save(job *jobs.Job) error
+	findByID() *jobs.Job
 }
