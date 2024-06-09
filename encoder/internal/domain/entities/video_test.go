@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/RafaLopesMelo/go-video-encoder/domain/entities"
-	"github.com/RafaLopesMelo/go-video-encoder/domain/value_objects"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects"
 	"github.com/stretchr/testify/require"
 )
 
