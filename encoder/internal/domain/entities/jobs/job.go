@@ -2,27 +2,27 @@ package jobs
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
 )
 
 type Job struct {
-    ID                  *value_objects.UniqueEntityID
+    ID                  *unique_entity_id.UniqueEntityID
     OutputBucketPath    string
     Status              string
-    VideoID             *value_objects.UniqueEntityID
+    VideoID             *unique_entity_id.UniqueEntityID
     Error               string
 }
 
 type InputJobDto struct {
     OutputBucketPath    string
     Status              string
-    VideoID             *value_objects.UniqueEntityID
+    VideoID             *unique_entity_id.UniqueEntityID
     Error               string
 }
 
-func NewJob(input InputJobDto, id *value_objects.UniqueEntityID) *Job {
+func NewJob(input InputJobDto, id *unique_entity_id.UniqueEntityID) *Job {
     if id == nil {
-        id = value_objects.NewID()
+        id = unique_entity_id.NewID()
     }
 
     job := Job{

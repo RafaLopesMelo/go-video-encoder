@@ -5,7 +5,7 @@ import (
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/videos"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repositories/mysql"
 )
 
@@ -44,7 +44,7 @@ func (repo *MySqlVideosRepository) Save(validated *videos.ValidatedVideo) error 
 	return nil
 }
 
-func (repo *MySqlVideosRepository) FindByID(id value_objects.UniqueEntityID) (*videos.Video, error) {
+func (repo *MySqlVideosRepository) FindByID(id unique_entity_id.UniqueEntityID) (*videos.Video, error) {
 	stmt := `
         SELECT id, resource_id, file_path FROM videos WHERE id = ?
     `

@@ -1,4 +1,4 @@
-package value_objects
+package unique_entity_id
 
 import uuid "github.com/satori/go.uuid"
 

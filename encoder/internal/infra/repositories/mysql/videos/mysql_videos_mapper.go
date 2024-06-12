@@ -2,7 +2,7 @@ package mysql_videos_repository
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/videos"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
 )
 
 type PersistenceVideoDto struct {
@@ -12,7 +12,7 @@ type PersistenceVideoDto struct {
 }
 
 func (dto PersistenceVideoDto) ToEntity() *videos.Video {
-	id := value_objects.NewIDFromValue(dto.id)
+	id := unique_entity_id.NewIDFromValue(dto.id)
 
 	return videos.NewVideo(videos.NewVideoDto{
 		FilePath:   dto.file_path,

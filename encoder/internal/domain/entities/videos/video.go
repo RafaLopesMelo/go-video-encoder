@@ -2,11 +2,11 @@ package videos
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
 )
 
 type Video struct {
-    ID          *value_objects.UniqueEntityID
+    ID          *unique_entity_id.UniqueEntityID
     ResourceID  string
     FilePath    string
 }
@@ -16,9 +16,9 @@ type NewVideoDto struct {
     FilePath string
 }
 
-func NewVideo(input NewVideoDto, id *value_objects.UniqueEntityID) *Video {
+func NewVideo(input NewVideoDto, id *unique_entity_id.UniqueEntityID) *Video {
     if id == nil {
-        id = value_objects.NewID()
+        id = unique_entity_id.NewID()
     }
 
     video := Video{
