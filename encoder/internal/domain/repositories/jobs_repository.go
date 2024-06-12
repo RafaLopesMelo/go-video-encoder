@@ -5,6 +5,6 @@ import (
 )
 
 type JobsRepository interface {
-	Save(job *jobs.Job) error
+	Save(job *jobs.ValidatedJob) error
 	findByID() *jobs.Job
 }

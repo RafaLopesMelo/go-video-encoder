@@ -1,6 +1,7 @@
 include .env
 
 MIGRATION_NAME ?=
+DATABASE_URL = "mysql://$(MYSQL_USERNAME):$(MYSQL_PASSWORD)@tcp($(MYSQL_HOST):$(MYSQL_PORT))/$(MYSQL_DATABASE)"
 
 create_migration:
 	@if [ -z "$(MIGRATION_NAME)" ]; then \

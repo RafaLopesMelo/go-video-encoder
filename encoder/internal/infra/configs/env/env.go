@@ -4,11 +4,16 @@ import (
 	"bufio"
 	"errors"
 	"os"
+	"path/filepath"
+	"runtime"
 	"strings"
 )
 
 func Load(filename string) error {
-	file, err := os.Open(filename)
+    _, b, _, _ := runtime.Caller(0)
+    basepath := filepath.Dir(b)
+
+	file, err := os.Open(basepath + "/" +filename)
 
 	if err != nil {
 		err = errors.New("Could not find .env file at the project root")

@@ -5,6 +5,6 @@ import (
 )
 
 type VideosRepository interface {
-    Save(video *videos.Video) error
+    Save(video *videos.ValidatedVideo) error
 	findByID() *videos.Video
 }
