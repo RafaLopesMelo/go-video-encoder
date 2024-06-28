@@ -1,5 +1,14 @@
 services:
   app:
+    container_name: video_encoder_app
     build: .
     volumes:
       - .:/go/src
+  db:
+    container_name: video_encoder_db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+    ports:
+      - 5432:5432

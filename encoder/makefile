@@ -1,7 +1,7 @@
-include .env
+include internal/infra/configs/env/.env
 
 MIGRATION_NAME ?=
-DATABASE_URL = "mysql://$(MYSQL_USERNAME):$(MYSQL_PASSWORD)@tcp($(MYSQL_HOST):$(MYSQL_PORT))/$(MYSQL_DATABASE)"
+DATABASE_URL = "postgresql://$(POSTGRES_USERNAME):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DATABASE)?sslmode=disable"
 
 create_migration:
 	@if [ -z "$(MIGRATION_NAME)" ]; then \

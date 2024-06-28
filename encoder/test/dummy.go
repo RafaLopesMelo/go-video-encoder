@@ -16,7 +16,7 @@ func DummyVideo() *videos.ValidatedVideo {
     validated, err := videos.NewValidatedVideo(*video)
 
     if err != nil {
-        panic("Dummy video not being build properly")
+        panic("Dummy video not being built properly")
     }
 
     return validated
