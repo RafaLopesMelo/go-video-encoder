@@ -4,6 +4,10 @@ type ValidatedJob struct {
     job Job
 }
 
+func (vj ValidatedJob) Job() Job {
+    return vj.job
+}
+
 func NewValidatedJob(job Job) (*ValidatedJob, error) {
 	err := job.validate()
 

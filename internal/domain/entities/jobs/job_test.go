@@ -10,7 +10,7 @@ import (
 )
 
 func TestNewJob(t *testing.T) {
-    job := jobs.NewJob(jobs.InputJobDto{
+    job := jobs.NewJob(jobs.NewJobDto{
         OutputBucketPath: "/test",
         VideoID: unique_entity_id.NewID(),
         Status: "PENDING",
@@ -24,7 +24,7 @@ func TestNewJob(t *testing.T) {
 }
 
 func TestNewJobWithoutOutputBucketPath(t *testing.T) {
-    job := jobs.NewJob(jobs.InputJobDto{
+    job := jobs.NewJob(jobs.NewJobDto{
         OutputBucketPath: "",
         VideoID: unique_entity_id.NewID(),
         Status: "PENDING",
@@ -39,7 +39,7 @@ func TestNewJobWithoutOutputBucketPath(t *testing.T) {
 }
 
 func TestNewJobWithoutVideoID(t *testing.T) {
-    job := jobs.NewJob(jobs.InputJobDto{
+    job := jobs.NewJob(jobs.NewJobDto{
         OutputBucketPath: "/test",
         VideoID: nil,
         Status: "PENDING",

@@ -13,14 +13,14 @@ type Job struct {
     Error               string
 }
 
-type InputJobDto struct {
+type NewJobDto struct {
     OutputBucketPath    string
     Status              string
     VideoID             *unique_entity_id.UniqueEntityID
     Error               string
 }
 
-func NewJob(input InputJobDto, id *unique_entity_id.UniqueEntityID) *Job {
+func NewJob(input NewJobDto, id *unique_entity_id.UniqueEntityID) *Job {
     if id == nil {
         id = unique_entity_id.NewID()
     }
