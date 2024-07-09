@@ -2,19 +2,17 @@ package main
 
 import (
 	"log"
-	go_http "net/http"
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/http"
 )
 
 func main() {
-	router := http.NewRouter()
+	server := http.NewServer()
+	err := server.ListenAndServe()
 
-	server := go_http.Server{
-		Addr:    ":3000",
-		Handler: router,
+	if err != nil {
+		panic(err)
 	}
 
-	log.Printf("[info] start http server listening 3000")
-	server.ListenAndServe()
+	log.Printf("[info] HTTP server listening to port 3000")
 }
