@@ -28,3 +28,12 @@ func NewRequestFromVanilla(req *http.Request) *Request {
 		Query:  make(map[string]string),
 	}
 }
+
+func NewRequest(method string, path string) *Request {
+	return &Request{
+		Method: method,
+		Path:   path,
+		Params: make(map[string]string),
+		Query:  make(map[string]string),
+	}
+}

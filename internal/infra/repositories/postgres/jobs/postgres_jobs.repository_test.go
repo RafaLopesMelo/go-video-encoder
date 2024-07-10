@@ -1,7 +1,6 @@
 package postgres_jobs_repository_test
 
 import (
-	"fmt"
 	"os"
 	"testing"
 

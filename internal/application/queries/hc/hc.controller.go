@@ -9,7 +9,7 @@ type HcController struct{}
 func (c *HcController) Handle(request *common.Request) *common.Response {
 	response := common.NewResponse()
 	data := map[string]string{
-		"message": "Hello World!",
+		"status": "OK",
 	}
 
 	response.Json(data)
