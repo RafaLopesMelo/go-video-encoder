@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/videos"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/configs/env"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repositories/postgres"
 	postgres_videos_repository "github.com/RafaLopesMelo/go-video-encoder/internal/infra/repositories/postgres/videos"
@@ -44,7 +44,7 @@ func TestUpdateVideo(t *testing.T) {
 
 	video := dummy.Video()
 	video.FilePath = "/test-updated"
-	validated, _ := videos.NewValidatedVideo(video)
+	validated, _ := entity.NewValidatedVideo(video)
 
 	repo.Save(validated)
 	updated, err := repo.FindByID(*video.ID)

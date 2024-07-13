@@ -1,4 +1,4 @@
-package videos
+package entity
 
 type ValidatedVideo struct {
 	video Video

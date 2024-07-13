@@ -1,7 +1,7 @@
 package postgres_videos_repository
 
 import (
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/videos"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
 )
 
@@ -11,10 +11,10 @@ type PersistenceVideoDto struct {
 	file_path   string
 }
 
-func (dto PersistenceVideoDto) ToEntity() *videos.Video {
+func (dto PersistenceVideoDto) ToEntity() *entity.Video {
 	id := unique_entity_id.NewIDFromValue(dto.id)
 
-	return videos.NewVideo(videos.NewVideoDto{
+	return entity.NewVideo(entity.NewVideoDto{
 		FilePath:   dto.file_path,
 		ResourceID: dto.resource_id,
 	}, id)

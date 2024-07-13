@@ -3,7 +3,7 @@ package postgres_jobs_repository
 import (
 	"database/sql"
 
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/jobs"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repositories/postgres"
@@ -13,7 +13,7 @@ type PostgresJobsRepository struct {
 	connection *postgres.Connection
 }
 
-func (repo *PostgresJobsRepository) Save(validated *jobs.ValidatedJob) error {
+func (repo *PostgresJobsRepository) Save(validated *entity.ValidatedJob) error {
 	job := validated.Job()
 
 	stmt := `
@@ -45,7 +45,7 @@ func (repo *PostgresJobsRepository) Save(validated *jobs.ValidatedJob) error {
 	return nil
 }
 
-func (repo *PostgresJobsRepository) FindByID(id unique_entity_id.UniqueEntityID) (*jobs.Job, error) {
+func (repo *PostgresJobsRepository) FindByID(id unique_entity_id.UniqueEntityID) (*entity.Job, error) {
 	stmt := `
         SELECT id, output_bucket_path, status, video_id, error FROM jobs WHERE id = $1
     `

@@ -1,11 +1,11 @@
-package jobs
+package entity
 
 type ValidatedJob struct {
-    job Job
+	job Job
 }
 
 func (vj ValidatedJob) Job() Job {
-    return vj.job
+	return vj.job
 }
 
 func NewValidatedJob(job Job) (*ValidatedJob, error) {

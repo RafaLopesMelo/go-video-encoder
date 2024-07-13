@@ -1,7 +1,7 @@
 package postgres_jobs_repository
 
 import (
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/jobs"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
 )
 
@@ -13,11 +13,11 @@ type PersistenceJobDto struct {
 	error              string
 }
 
-func (dto PersistenceJobDto) ToEntity() *jobs.Job {
+func (dto PersistenceJobDto) ToEntity() *entity.Job {
 	id := unique_entity_id.NewIDFromValue(dto.id)
 	videoId := unique_entity_id.NewIDFromValue(dto.video_id)
 
-	return jobs.NewJob(jobs.NewJobDto{
+	return entity.NewJob(entity.NewJobDto{
 		Status:           dto.status,
 		Error:            dto.error,
 		VideoID:          videoId,

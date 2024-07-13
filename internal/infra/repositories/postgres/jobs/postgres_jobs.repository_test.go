@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/jobs"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/configs/env"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repositories/postgres"
@@ -55,7 +55,7 @@ func TestUpdateVideo(t *testing.T) {
 
 	job := dummy.Job()
 	job.OutputBucketPath = "/test-updated"
-	validated, _ := jobs.NewValidatedJob(job)
+	validated, _ := entity.NewValidatedJob(job)
 
 	repo.Save(validated)
 	updated, err := repo.FindByID(*job.ID)

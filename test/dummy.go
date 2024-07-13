@@ -1,21 +1,20 @@
 package test
 
 import (
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/jobs"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entities/videos"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/http/common"
 )
 
-func DummyVideo() *videos.ValidatedVideo {
+func DummyVideo() *entity.ValidatedVideo {
 	id := unique_entity_id.NewID()
 
-	video := videos.NewVideo(videos.NewVideoDto{
+	video := entity.NewVideo(entity.NewVideoDto{
 		ResourceID: "test",
 		FilePath:   "/test",
 	}, id)
 
-	validated, err := videos.NewValidatedVideo(*video)
+	validated, err := entity.NewValidatedVideo(*video)
 
 	if err != nil {
 		panic("Dummy video not being built properly")
@@ -24,17 +23,17 @@ func DummyVideo() *videos.ValidatedVideo {
 	return validated
 }
 
-func DummyJob(videoId *unique_entity_id.UniqueEntityID) *jobs.ValidatedJob {
+func DummyJob(videoId *unique_entity_id.UniqueEntityID) *entity.ValidatedJob {
 	id := unique_entity_id.NewID()
 
-	job := jobs.NewJob(jobs.NewJobDto{
+	job := entity.NewJob(entity.NewJobDto{
 		OutputBucketPath: "/",
 		Status:           "PENDING",
 		VideoID:          videoId,
 		Error:            "",
 	}, id)
 
-	validated, err := jobs.NewValidatedJob(*job)
+	validated, err := entity.NewValidatedJob(*job)
 
 	if err != nil {
 		panic("Dummy job not being built properly")
