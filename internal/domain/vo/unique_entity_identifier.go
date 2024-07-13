@@ -1,6 +1,6 @@
 package vo
 
-import uuid "github.com/satori/go.uuid"
+import "github.com/google/uuid"
 
 type UniqueEntityID struct {
 	value string
@@ -17,7 +17,9 @@ func NewIDFromValue(id string) *UniqueEntityID {
 }
 
 func NewID() *UniqueEntityID {
+	value, _ := uuid.NewV7()
+
 	return &UniqueEntityID{
-		value: uuid.NewV4().String(),
+		value: value.String(),
 	}
 }

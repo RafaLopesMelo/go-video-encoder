@@ -1,20 +1,13 @@
 package query
 
-import (
-	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/http/common"
-)
+import "github.com/gofiber/fiber/v3"
 
 type HcController struct{}
 
-func (c *HcController) Handle(request *common.Request) *common.Response {
-	response := common.NewResponse()
-	data := map[string]string{
-		"status": "OK",
-	}
-
-	response.Json(data)
-
-	return response
+func (c *HcController) Handle(ctx fiber.Ctx) error {
+	return ctx.JSON(fiber.Map{
+		"message": "OK",
+	})
 }
 
 func NewHcController() *HcController {

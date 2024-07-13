@@ -3,7 +3,6 @@ package test
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/http/common"
 )
 
 func DummyVideo() *entity.ValidatedVideo {
@@ -40,15 +39,4 @@ func DummyJob(videoId *vo.UniqueEntityID) *entity.ValidatedJob {
 	}
 
 	return validated
-}
-
-type DummyController struct {
-}
-
-func (c *DummyController) Handle(request *common.Request) *common.Response {
-	return &common.Response{}
-}
-
-func NewDummyController() *DummyController {
-	return &DummyController{}
 }
