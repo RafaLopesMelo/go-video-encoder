@@ -1,4 +1,4 @@
-package hc
+package query
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/http/common"

@@ -1,4 +1,4 @@
-package postgres_videos_repository
+package pg
 
 import (
 	"database/sql"
@@ -6,11 +6,10 @@ import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repositories/postgres"
 )
 
 type PostgresVideosRepository struct {
-	connection *postgres.Connection
+	connection *connection
 }
 
 func (repo *PostgresVideosRepository) Save(validated *entity.ValidatedVideo) error {
@@ -76,7 +75,7 @@ func (repo *PostgresVideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Vi
 	return video, nil
 }
 
-func NewPostgresVideosRepository(connection *postgres.Connection) *PostgresVideosRepository {
+func NewPostgresVideosRepository(connection *connection) *PostgresVideosRepository {
 	repository := PostgresVideosRepository{
 		connection: connection,
 	}

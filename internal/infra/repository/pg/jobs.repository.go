@@ -1,4 +1,4 @@
-package postgres_jobs_repository
+package pg
 
 import (
 	"database/sql"
@@ -6,11 +6,10 @@ import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repositories/postgres"
 )
 
 type PostgresJobsRepository struct {
-	connection *postgres.Connection
+	connection *connection
 }
 
 func (repo *PostgresJobsRepository) Save(validated *entity.ValidatedJob) error {
@@ -79,7 +78,7 @@ func (repo *PostgresJobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job,
 	return dto.ToEntity(), nil
 }
 
-func NewPostgresJobsRepository(connection *postgres.Connection) *PostgresJobsRepository {
+func NewPostgresJobsRepository(connection *connection) *PostgresJobsRepository {
 	repository := PostgresJobsRepository{
 		connection: connection,
 	}

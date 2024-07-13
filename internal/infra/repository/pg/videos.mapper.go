@@ -1,4 +1,4 @@
-package postgres_videos_repository
+package pg
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
