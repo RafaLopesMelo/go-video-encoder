@@ -1,4 +1,4 @@
-package unique_entity_id
+package vo
 
 import uuid "github.com/satori/go.uuid"
 
@@ -7,7 +7,7 @@ type UniqueEntityID struct {
 }
 
 func (id *UniqueEntityID) Value() string {
-    return id.value
+	return id.value
 }
 
 func NewIDFromValue(id string) *UniqueEntityID {

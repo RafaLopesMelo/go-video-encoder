@@ -2,7 +2,7 @@ package postgres_videos_repository
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
 type PersistenceVideoDto struct {
@@ -12,7 +12,7 @@ type PersistenceVideoDto struct {
 }
 
 func (dto PersistenceVideoDto) ToEntity() *entity.Video {
-	id := unique_entity_id.NewIDFromValue(dto.id)
+	id := vo.NewIDFromValue(dto.id)
 
 	return entity.NewVideo(entity.NewVideoDto{
 		FilePath:   dto.file_path,

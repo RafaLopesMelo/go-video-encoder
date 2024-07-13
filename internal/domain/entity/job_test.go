@@ -5,14 +5,14 @@ import (
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 	"github.com/stretchr/testify/require"
 )
 
 func TestNewJob(t *testing.T) {
 	job := entity.NewJob(entity.NewJobDto{
 		OutputBucketPath: "/test",
-		VideoID:          unique_entity_id.NewID(),
+		VideoID:          vo.NewID(),
 		Status:           "PENDING",
 		Error:            "",
 	}, nil)
@@ -26,7 +26,7 @@ func TestNewJob(t *testing.T) {
 func TestNewJobWithoutOutputBucketPath(t *testing.T) {
 	job := entity.NewJob(entity.NewJobDto{
 		OutputBucketPath: "",
-		VideoID:          unique_entity_id.NewID(),
+		VideoID:          vo.NewID(),
 		Status:           "PENDING",
 		Error:            "",
 	}, nil)

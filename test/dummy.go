@@ -2,12 +2,12 @@ package test
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/http/common"
 )
 
 func DummyVideo() *entity.ValidatedVideo {
-	id := unique_entity_id.NewID()
+	id := vo.NewID()
 
 	video := entity.NewVideo(entity.NewVideoDto{
 		ResourceID: "test",
@@ -23,8 +23,8 @@ func DummyVideo() *entity.ValidatedVideo {
 	return validated
 }
 
-func DummyJob(videoId *unique_entity_id.UniqueEntityID) *entity.ValidatedJob {
-	id := unique_entity_id.NewID()
+func DummyJob(videoId *vo.UniqueEntityID) *entity.ValidatedJob {
+	id := vo.NewID()
 
 	job := entity.NewJob(entity.NewJobDto{
 		OutputBucketPath: "/",

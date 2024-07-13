@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/configs/env"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repositories/postgres"
 	postgres_jobs_repository "github.com/RafaLopesMelo/go-video-encoder/internal/infra/repositories/postgres/jobs"
@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var videoId *unique_entity_id.UniqueEntityID
+var videoId *vo.UniqueEntityID
 
 func TestMain(m *testing.M) {
 	err := env.Load(".env")

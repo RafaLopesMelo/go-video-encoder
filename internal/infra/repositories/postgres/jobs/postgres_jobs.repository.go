@@ -5,7 +5,7 @@ import (
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/value_objects/unique_entity_id"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repositories/postgres"
 )
 
@@ -45,7 +45,7 @@ func (repo *PostgresJobsRepository) Save(validated *entity.ValidatedJob) error {
 	return nil
 }
 
-func (repo *PostgresJobsRepository) FindByID(id unique_entity_id.UniqueEntityID) (*entity.Job, error) {
+func (repo *PostgresJobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
 	stmt := `
         SELECT id, output_bucket_path, status, video_id, error FROM jobs WHERE id = $1
     `
