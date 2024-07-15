@@ -1,0 +1,72 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+enum video_status {
+  PENDING     [note: "Video waiting upload"]
+  UPLOADED    [note: "Video uploaded"]
+  PROCESSING  [note: "Video with running jobs"]
+  PROCESSED   [note: "All jobs executed successfully"]
+  FAILURE     [note: "An error occurred while running jobs"]
+}
+
+Table video {
+  id          string [primary key, not null]
+  status      video_status [not null]
+  created_at  timestamp [not null]
+  updated_at  timestamp [not null]
+}
+
+enum storage_provider {
+  GCP [note: "Google Cloud Platform storage provider"]
+}
+
+Table storage {
+  id          string [primary key, not null] 
+  provider    storage_provider [not null]
+  path        string [not null]
+  upload_url  string [not null]
+}
+
+enum job_status {
+  IDLE    [note: "Job waiting dependent jobs"]
+  PENDING [note: "Job ready waiting to run"]
+  RUNNING [note: "Job currently running"]
+  DONE    [note: "Job done successfully"]
+  FAILURE [note: "An error occurred while running job"]
+}
+
+enum job_type {
+  TRANSCODE
+}
+
+Table job {
+  id              string [primary key, not null]
+  status          job_status [not null]
+  type            job_type [not null]
+  video_id        string [not null]
+  resource_id     string [null]
+  depends_on_id   string [null]
+  created_at      timestamp [not null]
+  updated_at      timestamp [not null]
+}
+
+Ref: job.depends_on_id > job.id
+Ref: job.video_id > video.id
+Ref: job.resource_id > resource.id
+
+enum resource_type {
+  RAW_VIDEO
+  TRANSCODED_VIDEO
+}
+
+Table resource {
+  id          string [primary key, not null]
+  type        resource_type [not null]
+  video_id    string [not null]
+  storage_id  string [not null]
+  metadata    text [not null]
+  created_at  timestamp [not null]
+}
+
+Ref: resource.storage_id > storage.id
+Ref: resource.video_id > video.id

@@ -1,3 +1,9 @@
-DROP TABLE IF EXISTS jobs;
-DROP TABLE IF EXISTS videos;
-
+DROP TABLE job;
+DROP TABLE resource;
+DROP TABLE storage;
+DROP TABLE video;
+DROP TYPE job_status;
+DROP TYPE job_type;
+DROP TYPE resource_type;
+DROP TYPE storage_provider;
+DROP TYPE video_status;
