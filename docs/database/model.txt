@@ -6,7 +6,7 @@ enum video_status {
   UPLOADED    [note: "Video uploaded"]
   PROCESSING  [note: "Video with running jobs"]
   PROCESSED   [note: "All jobs executed successfully"]
-  FAILURE     [note: "An error occurred while running jobs"]
+  FAILED      [note: "An error occurred while running jobs"]
 }
 
 Table video {
@@ -32,7 +32,7 @@ enum job_status {
   PENDING [note: "Job ready waiting to run"]
   RUNNING [note: "Job currently running"]
   DONE    [note: "Job done successfully"]
-  FAILURE [note: "An error occurred while running job"]
+  FAILED  [note: "An error occurred while running job"]
 }
 
 enum job_type {

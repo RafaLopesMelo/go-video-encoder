@@ -1,19 +1,25 @@
 package entity
 
 import (
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
+type VideoStatus string
+
+const (
+	VideoStatusPending    VideoStatus = "PENDING"
+	VideoStatusUploaded   VideoStatus = "UPLOADED"
+	VideoStatusProcessing VideoStatus = "PROCESSING"
+	VideoStatusProcessed  VideoStatus = "PROCESSED"
+	VideoStatusFailed     VideoStatus = "FAILED"
+)
+
 type Video struct {
-	ID         *vo.UniqueEntityID
-	ResourceID string
-	FilePath   string
+	ID     *vo.UniqueEntityID
+	Status VideoStatus
 }
 
 type NewVideoDto struct {
-	ResourceID string
-	FilePath   string
 }
 
 func NewVideo(input NewVideoDto, id *vo.UniqueEntityID) *Video {
@@ -22,22 +28,26 @@ func NewVideo(input NewVideoDto, id *vo.UniqueEntityID) *Video {
 	}
 
 	video := Video{
-		ID:         id,
-		ResourceID: input.ResourceID,
-		FilePath:   input.FilePath,
+		ID:     id,
+		Status: VideoStatusPending,
+	}
+
+	return &video
+}
+
+type LoadVideoDto struct {
+	Status VideoStatus
+}
+
+func LoadVideo(input LoadVideoDto, id *vo.UniqueEntityID) *Video {
+	video := Video{
+		ID:     id,
+		Status: input.Status,
 	}
 
 	return &video
 }
 
 func (video *Video) validate() error {
-	if video.FilePath == "" {
-		return errors.NewRequiredPropertyError("FilePath")
-	}
-
-	if video.ResourceID == "" {
-		return errors.NewRequiredPropertyError("ResourceID")
-	}
-
 	return nil
 }
