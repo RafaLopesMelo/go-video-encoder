@@ -1,5 +1,7 @@
 package vo
 
+import domainerrors "github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
+
 type StorageProvider string
 
 const (
@@ -18,12 +20,20 @@ type NewStorageDto struct {
 	UploadURL string
 }
 
-func NewStorage(input NewStorageDto) *Storage {
+func NewStorage(input NewStorageDto) (*Storage, error) {
+	if input.Provider == "" {
+		return nil, domainerrors.RequiredProperty
+	}
+
+	if input.Path == "" {
+		return nil, domainerrors.RequiredProperty
+	}
+
 	storage := Storage{
 		Provider:  input.Provider,
 		Path:      input.Path,
 		UploadURL: input.UploadURL,
 	}
 
-	return &storage
+	return &storage, nil
 }

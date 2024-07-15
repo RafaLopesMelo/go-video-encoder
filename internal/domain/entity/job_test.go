@@ -4,51 +4,37 @@ import (
 	"testing"
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 	"github.com/stretchr/testify/require"
 )
 
-func TestNewJob(t *testing.T) {
+func TestNewPendingJob(t *testing.T) {
 	job := entity.NewJob(entity.NewJobDto{
-		OutputBucketPath: "/test",
-		VideoID:          vo.NewID(),
-		Status:           "PENDING",
-		Error:            "",
-	}, nil)
+		Type:    entity.JobTypeTranscode,
+		VideoID: vo.NewID(),
+	}, nil, nil)
 
 	validated, err := entity.NewValidatedJob(*job)
 
 	require.Nil(t, err)
 	require.NotNil(t, validated)
+	require.EqualValues(t, entity.JobStatusPending, job.Status)
 }
 
-func TestNewJobWithoutOutputBucketPath(t *testing.T) {
+func TestNewIdleJob(t *testing.T) {
+	dependency := entity.NewJob(entity.NewJobDto{
+		Type:    entity.JobTypeTranscode,
+		VideoID: vo.NewID(),
+	}, nil, nil)
+
 	job := entity.NewJob(entity.NewJobDto{
-		OutputBucketPath: "",
-		VideoID:          vo.NewID(),
-		Status:           "PENDING",
-		Error:            "",
-	}, nil)
+		Type:    entity.JobTypeTranscode,
+		VideoID: vo.NewID(),
+	}, dependency, nil)
 
-	_, err := entity.NewValidatedJob(*job)
+	validated, err := entity.NewValidatedJob(*job)
 
-	expected := errors.NewRequiredPropertyError("OutputBucketPath")
-
-	require.Error(t, err, expected.Error())
-}
-
-func TestNewJobWithoutVideoID(t *testing.T) {
-	job := entity.NewJob(entity.NewJobDto{
-		OutputBucketPath: "/test",
-		VideoID:          nil,
-		Status:           "PENDING",
-		Error:            "",
-	}, nil)
-
-	_, err := entity.NewValidatedJob(*job)
-
-	expected := errors.NewRequiredPropertyError("VideoID")
-
-	require.Error(t, err, expected.Error())
+	require.Nil(t, err)
+	require.NotNil(t, validated)
+	require.EqualValues(t, entity.JobStatusIdle, job.Status)
 }

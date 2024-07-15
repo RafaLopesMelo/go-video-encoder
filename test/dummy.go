@@ -8,10 +8,7 @@ import (
 func DummyVideo() *entity.ValidatedVideo {
 	id := vo.NewID()
 
-	video := entity.NewVideo(entity.NewVideoDto{
-		ResourceID: "test",
-		FilePath:   "/test",
-	}, id)
+	video := entity.NewVideo(entity.NewVideoDto{}, id)
 
 	validated, err := entity.NewValidatedVideo(*video)
 
@@ -26,11 +23,9 @@ func DummyJob(videoId *vo.UniqueEntityID) *entity.ValidatedJob {
 	id := vo.NewID()
 
 	job := entity.NewJob(entity.NewJobDto{
-		OutputBucketPath: "/",
-		Status:           "PENDING",
-		VideoID:          videoId,
-		Error:            "",
-	}, id)
+		Type:    entity.JobTypeTranscode,
+		VideoID: vo.NewID(),
+	}, nil, id)
 
 	validated, err := entity.NewValidatedJob(*job)
 
@@ -39,4 +34,18 @@ func DummyJob(videoId *vo.UniqueEntityID) *entity.ValidatedJob {
 	}
 
 	return validated
+}
+
+func DummyStorage() *vo.Storage {
+	storage, err := vo.NewStorage(vo.NewStorageDto{
+		Provider:  vo.StorageProviderGCP,
+		Path:      "/test",
+		UploadURL: "test",
+	})
+
+	if err != nil {
+		panic("Dummy storage not being built properly")
+	}
+
+	return storage
 }
