@@ -14,7 +14,7 @@ var videoId *vo.UniqueEntityID
 
 func jobTestSetup() {
 	connection := pg.NewConnection()
-	repo := pg.NewPostgresVideosRepository(connection)
+	repo := pg.NewVideosRepository(connection)
 
 	video := test.DummyVideo()
 	repo.Save(video)
@@ -23,7 +23,7 @@ func jobTestSetup() {
 
 func TestCreateJob(t *testing.T) {
 	connection := pg.NewConnection()
-	repo := pg.NewPostgresJobsRepository(connection)
+	repo := pg.NewJobsRepository(connection)
 
 	dummy := test.DummyJob(videoId)
 
@@ -36,7 +36,7 @@ func TestCreateJob(t *testing.T) {
 
 func TestUpdateJob(t *testing.T) {
 	connection := pg.NewConnection()
-	repo := pg.NewPostgresJobsRepository(connection)
+	repo := pg.NewJobsRepository(connection)
 
 	dummy := test.DummyJob(videoId)
 	repo.Save(dummy)

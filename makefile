@@ -9,7 +9,7 @@ create_migration:
 		exit 1; \
 	else \
 		echo "Creating migration: $(MIGRATION_NAME)"; \
-		./scripts/migrate create -ext=sql -dir=internal/database/migration -seq $(MIGRATION_NAME); \
+		./script/migrate create -ext=sql -dir=internal/database/migration -seq $(MIGRATION_NAME); \
 	fi
 
 migrate_up:

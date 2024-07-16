@@ -5,6 +5,6 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func SetupRouter(app *fiber.App) {
+func Setup(app *fiber.App) {
 	app.Get("/hc", query.NewHcController().Handle)
 }

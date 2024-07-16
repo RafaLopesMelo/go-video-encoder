@@ -8,11 +8,11 @@ import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
-type PostgresJobsRepository struct {
+type JobsRepository struct {
 	connection *connection
 }
 
-func (repo *PostgresJobsRepository) Save(validated *entity.ValidatedJob) error {
+func (repo *JobsRepository) Save(validated *entity.ValidatedJob) error {
 	job := validated.Job()
 
 	stmt := `
@@ -44,7 +44,7 @@ func (repo *PostgresJobsRepository) Save(validated *entity.ValidatedJob) error {
 	return nil
 }
 
-func (repo *PostgresJobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
+func (repo *JobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
 	stmt := `
         SELECT id, output_bucket_path, status, video_id, error FROM jobs WHERE id = $1
     `
@@ -78,8 +78,8 @@ func (repo *PostgresJobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job,
 	return dto.ToEntity(), nil
 }
 
-func NewPostgresJobsRepository(connection *connection) *PostgresJobsRepository {
-	repository := PostgresJobsRepository{
+func NewJobsRepository(connection *connection) *JobsRepository {
+	repository := JobsRepository{
 		connection: connection,
 	}
 

@@ -11,7 +11,7 @@ import (
 
 func TestCreateVideo(t *testing.T) {
 	connection := pg.NewConnection()
-	repo := pg.NewPostgresVideosRepository(connection)
+	repo := pg.NewVideosRepository(connection)
 
 	dummy := test.DummyVideo()
 
@@ -24,7 +24,7 @@ func TestCreateVideo(t *testing.T) {
 
 func TestUpdateVideo(t *testing.T) {
 	connection := pg.NewConnection()
-	repo := pg.NewPostgresVideosRepository(connection)
+	repo := pg.NewVideosRepository(connection)
 
 	dummy := test.DummyVideo()
 	repo.Save(dummy)

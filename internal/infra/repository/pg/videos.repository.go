@@ -4,15 +4,14 @@ import (
 	"database/sql"
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
-type PostgresVideosRepository struct {
+type VideosRepository struct {
 	connection *connection
 }
 
-func (repo *PostgresVideosRepository) Save(validated *entity.ValidatedVideo) error {
+func (repo *VideosRepository) Save(validated *entity.ValidatedVideo) error {
 	video := validated.Video()
 
 	stmt := `
@@ -42,7 +41,7 @@ func (repo *PostgresVideosRepository) Save(validated *entity.ValidatedVideo) err
 	return nil
 }
 
-func (repo *PostgresVideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, error) {
+func (repo *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, error) {
 	stmt := `
         SELECT id, resource_id, file_path FROM videos WHERE id = $1
     `
@@ -75,8 +74,8 @@ func (repo *PostgresVideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Vi
 	return video, nil
 }
 
-func NewPostgresVideosRepository(connection *connection) *PostgresVideosRepository {
-	repository := PostgresVideosRepository{
+func NewVideosRepository(connection *connection) *VideosRepository {
+	repository := VideosRepository{
 		connection: connection,
 	}
 
