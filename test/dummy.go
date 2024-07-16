@@ -35,17 +35,3 @@ func DummyJob(videoId *vo.UniqueEntityID) *entity.ValidatedJob {
 
 	return validated
 }
-
-func DummyStorage() *vo.Storage {
-	storage, err := vo.NewStorage(vo.NewStorageDto{
-		Provider:  vo.StorageProviderGCP,
-		Path:      "/test",
-		UploadURL: "test",
-	})
-
-	if err != nil {
-		panic("Dummy storage not being built properly")
-	}
-
-	return storage
-}

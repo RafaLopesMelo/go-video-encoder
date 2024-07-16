@@ -2,11 +2,10 @@ package main
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/http/router"
-	"github.com/gofiber/fiber/v3"
+	"net/http"
 )
 
 func main() {
-	app := fiber.New()
-	router.Setup(app)
-	app.Listen(":3000")
+	router.Setup()
+	http.ListenAndServe(":3000", nil)
 }

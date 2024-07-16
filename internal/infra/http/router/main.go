@@ -1,10 +1,11 @@
 package router
 
 import (
+	"net/http"
+
 	"github.com/RafaLopesMelo/go-video-encoder/internal/application/query"
-	"github.com/gofiber/fiber/v3"
 )
 
-func Setup(app *fiber.App) {
-	app.Get("/hc", query.NewHcController().Handle)
+func Setup() {
+	http.HandleFunc("GET /hc", query.NewHcController().Handle)
 }

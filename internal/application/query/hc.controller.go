@@ -1,13 +1,15 @@
 package query
 
-import "github.com/gofiber/fiber/v3"
+import (
+	"encoding/json"
+	"net/http"
+)
 
 type HcController struct{}
 
-func (c *HcController) Handle(ctx fiber.Ctx) error {
-	return ctx.JSON(fiber.Map{
-		"message": "OK",
-	})
+func (c *HcController) Handle(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]any{"message": "Hello World"})
 }
 
 func NewHcController() *HcController {
