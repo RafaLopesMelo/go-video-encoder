@@ -6,16 +6,14 @@ import (
 )
 
 type PersistenceVideoDto struct {
-	id          string
-	resource_id string
-	file_path   string
+	id     string
+	status entity.VideoStatus
 }
 
 func (dto PersistenceVideoDto) ToEntity() *entity.Video {
 	id := vo.NewIDFromValue(dto.id)
 
-	return entity.NewVideo(entity.NewVideoDto{
-		FilePath:   dto.file_path,
-		ResourceID: dto.resource_id,
+	return entity.LoadVideo(entity.LoadVideoDto{
+		Status: dto.status,
 	}, id)
 }

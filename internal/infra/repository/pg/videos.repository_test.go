@@ -15,7 +15,9 @@ func TestCreateVideo(t *testing.T) {
 
 	dummy := test.DummyVideo()
 
-	repo.Save(dummy)
+	err := repo.Save(dummy)
+	require.Nil(t, err)
+
 	video, err := repo.FindByID(*dummy.Video().ID)
 
 	require.Nil(t, err)
@@ -30,7 +32,7 @@ func TestUpdateVideo(t *testing.T) {
 	repo.Save(dummy)
 
 	video := dummy.Video()
-	video.FilePath = "/test-updated"
+	video.Status = entity.VideoStatusUploaded
 	validated, _ := entity.NewValidatedVideo(video)
 
 	repo.Save(validated)
@@ -38,5 +40,5 @@ func TestUpdateVideo(t *testing.T) {
 
 	require.Nil(t, err)
 	require.Equal(t, video.ID, updated.ID)
-	require.Equal(t, video.FilePath, updated.FilePath)
+	require.Equal(t, video.Status, updated.Status)
 }

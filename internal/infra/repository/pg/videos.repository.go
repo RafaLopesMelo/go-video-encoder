@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
+	domainerrors "github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
@@ -15,14 +16,13 @@ func (repo *VideosRepository) Save(validated *entity.ValidatedVideo) error {
 	video := validated.Video()
 
 	stmt := `
-        INSERT INTO videos
-            (id, resource_id, file_path, created_at, updated_at)
+        INSERT INTO video
+            (id, status, created_at, updated_at)
         VALUES
-            ($1, $2, $3, NOW(), NOW())
+            ($1, $2, NOW(), NOW())
         ON CONFLICT (id)
         DO UPDATE SET
-            resource_id = EXCLUDED.resource_id,
-            file_path = EXCLUDED.file_path,
+            status = EXCLUDED.status,
             updated_at = NOW()
         ;
     `
@@ -30,8 +30,7 @@ func (repo *VideosRepository) Save(validated *entity.ValidatedVideo) error {
 	_, err := repo.connection.DB.Exec(
 		stmt,
 		video.ID.Value(),
-		video.ResourceID,
-		video.FilePath,
+		video.Status,
 	)
 
 	if err != nil {
@@ -43,7 +42,7 @@ func (repo *VideosRepository) Save(validated *entity.ValidatedVideo) error {
 
 func (repo *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, error) {
 	stmt := `
-        SELECT id, resource_id, file_path FROM videos WHERE id = $1
+        SELECT id, status FROM video WHERE id = $1
     `
 
 	result := repo.connection.DB.QueryRow(stmt, id.Value())
@@ -52,7 +51,7 @@ func (repo *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, err
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return nil, errors.NewEntityNotFoundError()
+			return nil, domainerrors.EntityNotFound
 		}
 
 		return nil, err
@@ -62,8 +61,7 @@ func (repo *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, err
 
 	err = result.Scan(
 		&dto.id,
-		&dto.resource_id,
-		&dto.file_path,
+		&dto.status,
 	)
 
 	if err != nil {

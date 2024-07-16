@@ -11,7 +11,7 @@ import (
 
 func TestValidResource(t *testing.T) {
 	resource := entity.NewResource(entity.NewResourceDto{
-		Type:      entity.ResourceTypeRawVideo,
+		Kind:      entity.ResourceKindRawVideo,
 		VideoID:   vo.NewID(),
 		Provider:  entity.ResourceStorageProviderGCP,
 		Path:      "/test",
@@ -24,10 +24,10 @@ func TestValidResource(t *testing.T) {
 	require.Nil(t, err)
 }
 
-func TestValidResourceWithoutVideoID(t *testing.T) {
+func TestResourceWithoutVideoID(t *testing.T) {
 	resource := entity.NewResource(entity.NewResourceDto{
-		Type:      entity.ResourceTypeRawVideo,
-		VideoID:   vo.NewID(),
+		Kind:      entity.ResourceKindRawVideo,
+		VideoID:   nil,
 		Provider:  entity.ResourceStorageProviderGCP,
 		Path:      "/test",
 		UploadURL: "/test",

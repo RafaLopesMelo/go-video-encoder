@@ -27,7 +27,9 @@ func TestCreateJob(t *testing.T) {
 
 	dummy := test.DummyJob(videoId)
 
-	repo.Save(dummy)
+	err := repo.Save(dummy)
+	require.Nil(t, err)
+
 	job, err := repo.FindByID(*dummy.Job().ID)
 
 	require.Nil(t, err)
@@ -42,7 +44,7 @@ func TestUpdateJob(t *testing.T) {
 	repo.Save(dummy)
 
 	job := dummy.Job()
-	job.OutputBucketPath = "/test-updated"
+	job.Error = "My error"
 	validated, _ := entity.NewValidatedJob(job)
 
 	repo.Save(validated)
@@ -50,5 +52,5 @@ func TestUpdateJob(t *testing.T) {
 
 	require.Nil(t, err)
 	require.Equal(t, job.ID, updated.ID)
-	require.Equal(t, job.OutputBucketPath, updated.OutputBucketPath)
+	require.Equal(t, job.Error, updated.Error)
 }

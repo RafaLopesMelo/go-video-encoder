@@ -19,11 +19,11 @@ CREATE TYPE "job_status" AS ENUM (
     'FAILURE'
 );
 
-CREATE TYPE "job_type" AS ENUM (
+CREATE TYPE "job_kind" AS ENUM (
     'TRANSCODE'
 );
 
-CREATE TYPE "resource_type" AS ENUM (
+CREATE TYPE "resource_kind" AS ENUM (
     'RAW_VIDEO',
     'TRANSCODED_VIDEO'
 );
@@ -43,7 +43,7 @@ CREATE TABLE "video" (
 CREATE TABLE "job" (
     "id"            UUID PRIMARY KEY NOT NULL,
     "status"        job_status NOT NULL,
-    "type"          job_type NOT NULL,
+    "kind"          job_kind NOT NULL,
     "video_id"      UUID NOT NULL,
     "resource_id"   UUID NULL,
     "depends_on_id" UUID NULL,
@@ -55,7 +55,7 @@ CREATE TABLE "job" (
 CREATE TABLE "resource" (
     "id"                UUID PRIMARY KEY NOT NULL,
     "status"            resource_status NOT NULL,
-    "type"              resource_type NOT NULL,
+    "kind"              resource_kind NOT NULL,
     "video_id"          UUID NOT NULL,
     "storage_provider"  resource_storage_provider NOT NULL,
     "size"              INT NULL,

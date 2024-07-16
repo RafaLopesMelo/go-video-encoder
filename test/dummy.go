@@ -23,8 +23,8 @@ func DummyJob(videoId *vo.UniqueEntityID) *entity.ValidatedJob {
 	id := vo.NewID()
 
 	job := entity.NewJob(entity.NewJobDto{
-		Type:    entity.JobTypeTranscode,
-		VideoID: vo.NewID(),
+		Kind:    entity.JobKindTranscode,
+		VideoID: videoId,
 	}, nil, id)
 
 	validated, err := entity.NewValidatedJob(*job)

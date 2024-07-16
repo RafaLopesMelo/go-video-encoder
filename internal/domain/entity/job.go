@@ -15,16 +15,16 @@ const (
 	JobStatusFailed  = "FAILED"
 )
 
-type JobType string
+type JobKind string
 
 const (
-	JobTypeTranscode = "TRANSCODE"
+	JobKindTranscode = "TRANSCODE"
 )
 
 type Job struct {
 	ID          *vo.UniqueEntityID
 	Status      JobStatus
-	Type        JobType
+	Kind        JobKind
 	VideoID     *vo.UniqueEntityID
 	ResourceID  *vo.UniqueEntityID
 	DependsOnID *vo.UniqueEntityID
@@ -32,7 +32,7 @@ type Job struct {
 }
 
 type NewJobDto struct {
-	Type    JobType
+	Kind    JobKind
 	VideoID *vo.UniqueEntityID
 }
 
@@ -54,7 +54,7 @@ func NewJob(input NewJobDto, dependsOn *Job, id *vo.UniqueEntityID) *Job {
 	job := Job{
 		ID:          id,
 		Status:      status,
-		Type:        input.Type,
+		Kind:        input.Kind,
 		VideoID:     input.VideoID,
 		ResourceID:  nil,
 		DependsOnID: depensOnID,
@@ -66,7 +66,7 @@ func NewJob(input NewJobDto, dependsOn *Job, id *vo.UniqueEntityID) *Job {
 
 type LoadJobDto struct {
 	Status      JobStatus
-	Type        JobType
+	Kind        JobKind
 	VideoID     *vo.UniqueEntityID
 	ResourceID  *vo.UniqueEntityID
 	DependsOnID *vo.UniqueEntityID
@@ -77,7 +77,7 @@ func LoadJob(input LoadJobDto, id *vo.UniqueEntityID) *Job {
 	job := Job{
 		ID:          id,
 		Status:      input.Status,
-		Type:        input.Type,
+		Kind:        input.Kind,
 		VideoID:     input.VideoID,
 		ResourceID:  input.ResourceID,
 		DependsOnID: input.DependsOnID,

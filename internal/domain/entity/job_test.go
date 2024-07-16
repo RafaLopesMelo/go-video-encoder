@@ -10,7 +10,7 @@ import (
 
 func TestNewPendingJob(t *testing.T) {
 	job := entity.NewJob(entity.NewJobDto{
-		Type:    entity.JobTypeTranscode,
+		Kind:    entity.JobKindTranscode,
 		VideoID: vo.NewID(),
 	}, nil, nil)
 
@@ -23,12 +23,12 @@ func TestNewPendingJob(t *testing.T) {
 
 func TestNewIdleJob(t *testing.T) {
 	dependency := entity.NewJob(entity.NewJobDto{
-		Type:    entity.JobTypeTranscode,
+		Kind:    entity.JobKindTranscode,
 		VideoID: vo.NewID(),
 	}, nil, nil)
 
 	job := entity.NewJob(entity.NewJobDto{
-		Type:    entity.JobTypeTranscode,
+		Kind:    entity.JobKindTranscode,
 		VideoID: vo.NewID(),
 	}, dependency, nil)
 

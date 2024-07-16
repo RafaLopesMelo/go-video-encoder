@@ -3,6 +3,6 @@ package domainerrors
 import "errors"
 
 var (
-	RequiredProperty   = errors.New("Missing required property")
-	RepositoryNotFound = errors.New("Repository could not found entity")
+	RequiredProperty = errors.New("missing required property")
+	EntityNotFound   = errors.New("entity not found")
 )

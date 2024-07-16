@@ -5,11 +5,11 @@ import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
-type ResourceType string
+type ResourceKind string
 
 const (
-	ResourceTypeRawVideo        ResourceType = "RAW_VIDEO"
-	ResourceTypeTranscodedVideo ResourceType = "TRANSCODED_VIDEO"
+	ResourceKindRawVideo        ResourceKind = "RAW_VIDEO"
+	ResourceKindTranscodedVideo ResourceKind = "TRANSCODED_VIDEO"
 )
 
 type ResourceStorageProvider string
@@ -28,7 +28,7 @@ const (
 type Resource struct {
 	ID        *vo.UniqueEntityID
 	Status    ResourceStatus
-	Type      ResourceType
+	Kind      ResourceKind
 	VideoID   *vo.UniqueEntityID
 	Provider  ResourceStorageProvider
 	Path      string
@@ -37,7 +37,7 @@ type Resource struct {
 }
 
 type NewResourceDto struct {
-	Type      ResourceType
+	Kind      ResourceKind
 	VideoID   *vo.UniqueEntityID
 	Provider  ResourceStorageProvider
 	Path      string
@@ -52,7 +52,7 @@ func NewResource(input NewResourceDto, id *vo.UniqueEntityID) *Resource {
 
 	resource := Resource{
 		ID:        id,
-		Type:      input.Type,
+		Kind:      input.Kind,
 		Status:    ResourceStatusActive,
 		VideoID:   input.VideoID,
 		Provider:  input.Provider,
@@ -66,7 +66,7 @@ func NewResource(input NewResourceDto, id *vo.UniqueEntityID) *Resource {
 
 type LoadResourceDto struct {
 	Status    ResourceStatus
-	Type      ResourceType
+	Kind      ResourceKind
 	VideoID   *vo.UniqueEntityID
 	Provider  ResourceStorageProvider
 	Path      string
@@ -78,7 +78,7 @@ func NewResourceFromDto(dto LoadResourceDto, id *vo.UniqueEntityID) *Resource {
 	resource := Resource{
 		ID:        id,
 		Status:    dto.Status,
-		Type:      dto.Type,
+		Kind:      dto.Kind,
 		VideoID:   dto.VideoID,
 		Provider:  dto.Provider,
 		Path:      dto.Path,
