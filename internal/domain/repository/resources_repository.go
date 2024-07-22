@@ -5,7 +5,7 @@ import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
-type JobsRepository interface {
-	Save(job *entity.ValidatedJob) error
-	FindByID(id vo.UniqueEntityID) (*entity.Job, error)
+type ResourcesRepository interface {
+	Save(resource *entity.ValidatedResource) error
+	FindByID(id vo.UniqueEntityID) (*entity.Resource, error)
 }

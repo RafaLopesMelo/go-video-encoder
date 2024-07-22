@@ -8,11 +8,21 @@ import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
+type persistenceJobDto struct {
+	id            string
+	status        entity.JobStatus
+	kind          entity.JobKind
+	video_id      string
+	resource_id   sql.NullString
+	depends_on_id sql.NullString
+	error         string
+}
+
 type JobsRepository struct {
 	connection *connection
 }
 
-func (repo *JobsRepository) Save(validated *entity.ValidatedJob) error {
+func (r *JobsRepository) Save(validated *entity.ValidatedJob) error {
 	job := validated.Job()
 
 	stmt := `
@@ -31,33 +41,18 @@ func (repo *JobsRepository) Save(validated *entity.ValidatedJob) error {
             updated_at = NOW()
     `
 
-	dependsOnID := &sql.NullString{
-		String: "",
-		Valid:  false,
-	}
-	if job.DependsOnID != nil {
-		dependsOnID.Valid = true
-		dependsOnID.String = job.DependsOnID.Value()
-	}
+	mapper := newJobMapper()
+	data := mapper.ToPersistence(job)
 
-	resourceID := &sql.NullString{
-		String: "",
-		Valid:  false,
-	}
-	if job.DependsOnID != nil {
-		resourceID.Valid = true
-		resourceID.String = job.ResourceID.Value()
-	}
-
-	_, err := repo.connection.DB.Exec(
+	_, err := r.connection.DB.Exec(
 		stmt,
-		job.ID.Value(),
-		job.Status,
-		job.Kind,
-		job.VideoID.Value(),
-		resourceID,
-		dependsOnID,
-		job.Error,
+		data.id,
+		data.status,
+		data.kind,
+		data.video_id,
+		data.resource_id,
+		data.depends_on_id,
+		data.error,
 	)
 
 	if err != nil {
@@ -67,12 +62,12 @@ func (repo *JobsRepository) Save(validated *entity.ValidatedJob) error {
 	return nil
 }
 
-func (repo *JobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
+func (r *JobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
 	stmt := `
         SELECT id, status, kind, video_id, resource_id, depends_on_id, error  FROM job WHERE id = $1
     `
 
-	result := repo.connection.DB.QueryRow(stmt, id.Value())
+	result := r.connection.DB.QueryRow(stmt, id.Value())
 
 	err := result.Err()
 
@@ -84,8 +79,7 @@ func (repo *JobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) 
 		return nil, err
 	}
 
-	dto := &PersistenceJobDto{}
-
+	dto := persistenceJobDto{}
 	err = result.Scan(
 		&dto.id,
 		&dto.status,
@@ -100,7 +94,10 @@ func (repo *JobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) 
 		return nil, err
 	}
 
-	return dto.ToEntity(), nil
+	mapper := newJobMapper()
+	entity := mapper.ToEntity(dto)
+
+	return entity, nil
 }
 
 func NewJobsRepository(connection *connection) *JobsRepository {

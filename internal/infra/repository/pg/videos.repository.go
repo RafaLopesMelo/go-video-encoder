@@ -12,7 +12,7 @@ type VideosRepository struct {
 	connection *connection
 }
 
-func (repo *VideosRepository) Save(validated *entity.ValidatedVideo) error {
+func (r *VideosRepository) Save(validated *entity.ValidatedVideo) error {
 	video := validated.Video()
 
 	stmt := `
@@ -27,10 +27,13 @@ func (repo *VideosRepository) Save(validated *entity.ValidatedVideo) error {
         ;
     `
 
-	_, err := repo.connection.DB.Exec(
+	mapper := newVideoMapper()
+	data := mapper.ToPersistence(video)
+
+	_, err := r.connection.DB.Exec(
 		stmt,
-		video.ID.Value(),
-		video.Status,
+		data.id,
+		data.status,
 	)
 
 	if err != nil {
@@ -40,12 +43,12 @@ func (repo *VideosRepository) Save(validated *entity.ValidatedVideo) error {
 	return nil
 }
 
-func (repo *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, error) {
+func (r *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, error) {
 	stmt := `
         SELECT id, status FROM video WHERE id = $1
     `
 
-	result := repo.connection.DB.QueryRow(stmt, id.Value())
+	result := r.connection.DB.QueryRow(stmt, id.Value())
 
 	err := result.Err()
 
@@ -57,8 +60,7 @@ func (repo *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, err
 		return nil, err
 	}
 
-	dto := &PersistenceVideoDto{}
-
+	dto := persistenceVideoDto{}
 	err = result.Scan(
 		&dto.id,
 		&dto.status,
@@ -68,8 +70,10 @@ func (repo *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, err
 		return nil, err
 	}
 
-	video := dto.ToEntity()
-	return video, nil
+	mapper := newVideoMapper()
+	entity := mapper.ToEntity(dto)
+
+	return entity, nil
 }
 
 func NewVideosRepository(connection *connection) *VideosRepository {

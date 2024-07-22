@@ -18,7 +18,7 @@ func TestNewPendingJob(t *testing.T) {
 
 	require.Nil(t, err)
 	require.NotNil(t, validated)
-	require.EqualValues(t, entity.JobStatusPending, job.Status)
+	require.EqualValues(t, job.Status, entity.JobStatusPending)
 }
 
 func TestNewIdleJob(t *testing.T) {
@@ -36,5 +36,5 @@ func TestNewIdleJob(t *testing.T) {
 
 	require.Nil(t, err)
 	require.NotNil(t, validated)
-	require.EqualValues(t, entity.JobStatusIdle, job.Status)
+	require.EqualValues(t, job.Status, entity.JobStatusIdle)
 }
