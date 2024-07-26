@@ -11,12 +11,12 @@ import (
 
 func TestValidResource(t *testing.T) {
 	resource := entity.NewResource(entity.NewResourceDto{
-		Kind:      entity.ResourceKindRawVideo,
-		VideoID:   vo.NewID(),
-		Provider:  entity.ResourceStorageProviderGCP,
-		Path:      "/test",
-		UploadURL: "/test",
-		Size:      100,
+		Kind:            entity.ResourceKindRawVideo,
+		VideoID:         vo.NewID(),
+		StorageProvider: entity.ResourceStorageProviderGCP,
+		Path:            "/test",
+		UploadURL:       "/test",
+		Size:            100,
 	}, nil)
 
 	_, err := entity.NewValidatedResource(*resource)
@@ -26,12 +26,12 @@ func TestValidResource(t *testing.T) {
 
 func TestResourceWithoutVideoID(t *testing.T) {
 	resource := entity.NewResource(entity.NewResourceDto{
-		Kind:      entity.ResourceKindRawVideo,
-		VideoID:   nil,
-		Provider:  entity.ResourceStorageProviderGCP,
-		Path:      "/test",
-		UploadURL: "/test",
-		Size:      100,
+		Kind:            entity.ResourceKindRawVideo,
+		VideoID:         nil,
+		StorageProvider: entity.ResourceStorageProviderGCP,
+		Path:            "/test",
+		UploadURL:       "/test",
+		Size:            100,
 	}, nil)
 
 	_, err := entity.NewValidatedResource(*resource)

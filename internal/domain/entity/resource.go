@@ -26,23 +26,23 @@ const (
 )
 
 type Resource struct {
-	ID        *vo.UniqueEntityID
-	Status    ResourceStatus
-	Kind      ResourceKind
-	VideoID   *vo.UniqueEntityID
-	Provider  ResourceStorageProvider
-	Path      string
-	UploadURL string
-	Size      int
+	ID              *vo.UniqueEntityID
+	Status          ResourceStatus
+	Kind            ResourceKind
+	VideoID         *vo.UniqueEntityID
+	StorageProvider ResourceStorageProvider
+	Path            string
+	UploadURL       string
+	Size            int
 }
 
 type NewResourceDto struct {
-	Kind      ResourceKind
-	VideoID   *vo.UniqueEntityID
-	Provider  ResourceStorageProvider
-	Path      string
-	UploadURL string
-	Size      int
+	Kind            ResourceKind
+	VideoID         *vo.UniqueEntityID
+	StorageProvider ResourceStorageProvider
+	Path            string
+	UploadURL       string
+	Size            int
 }
 
 func NewResource(input NewResourceDto, id *vo.UniqueEntityID) *Resource {
@@ -51,39 +51,39 @@ func NewResource(input NewResourceDto, id *vo.UniqueEntityID) *Resource {
 	}
 
 	resource := Resource{
-		ID:        id,
-		Kind:      input.Kind,
-		Status:    ResourceStatusActive,
-		VideoID:   input.VideoID,
-		Provider:  input.Provider,
-		Path:      input.Path,
-		UploadURL: input.UploadURL,
-		Size:      input.Size,
+		ID:              id,
+		Kind:            input.Kind,
+		Status:          ResourceStatusActive,
+		VideoID:         input.VideoID,
+		StorageProvider: input.StorageProvider,
+		Path:            input.Path,
+		UploadURL:       input.UploadURL,
+		Size:            input.Size,
 	}
 
 	return &resource
 }
 
 type LoadResourceDto struct {
-	Status    ResourceStatus
-	Kind      ResourceKind
-	VideoID   *vo.UniqueEntityID
-	Provider  ResourceStorageProvider
-	Path      string
-	UploadURL string
-	Size      int
+	Status          ResourceStatus
+	Kind            ResourceKind
+	VideoID         *vo.UniqueEntityID
+	StorageProvider ResourceStorageProvider
+	Path            string
+	UploadURL       string
+	Size            int
 }
 
 func NewResourceFromDto(dto LoadResourceDto, id *vo.UniqueEntityID) *Resource {
 	resource := Resource{
-		ID:        id,
-		Status:    dto.Status,
-		Kind:      dto.Kind,
-		VideoID:   dto.VideoID,
-		Provider:  dto.Provider,
-		Path:      dto.Path,
-		UploadURL: dto.UploadURL,
-		Size:      dto.Size,
+		ID:              id,
+		Status:          dto.Status,
+		Kind:            dto.Kind,
+		VideoID:         dto.VideoID,
+		StorageProvider: dto.StorageProvider,
+		Path:            dto.Path,
+		UploadURL:       dto.UploadURL,
+		Size:            dto.Size,
 	}
 
 	return &resource

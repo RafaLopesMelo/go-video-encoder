@@ -62,7 +62,8 @@ CREATE TABLE "resource" (
     "path"              VARCHAR(255) NOT NULL,
     "upload_url"        VARCHAR(255) NOT NULL,
     "metadata"          JSONB NOT NULL,
-    "created_at"        timestamp NOT NULL
+    "created_at"        timestamp NOT NULL,
+    "updated_at"        timestamp NOT NULL
 );
 
 ALTER TABLE "job" ADD FOREIGN KEY ("depends_on_id") REFERENCES "job" ("id");

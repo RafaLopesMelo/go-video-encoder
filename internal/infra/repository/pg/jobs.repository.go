@@ -2,6 +2,7 @@ package pg
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
@@ -56,7 +57,7 @@ func (r *JobsRepository) Save(validated *entity.ValidatedJob) error {
 	)
 
 	if err != nil {
-		return err
+		return fmt.Errorf("error saving job: %w", err)
 	}
 
 	return nil
@@ -76,7 +77,7 @@ func (r *JobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
 			return nil, domainerrors.EntityNotFound
 		}
 
-		return nil, err
+		return nil, fmt.Errorf("error finding job by id: %w", err)
 	}
 
 	dto := persistenceJobDto{}
@@ -91,7 +92,7 @@ func (r *JobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
 	)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error scanning job: %w", err)
 	}
 
 	mapper := newJobMapper()

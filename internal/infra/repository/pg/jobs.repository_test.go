@@ -4,22 +4,10 @@ import (
 	"testing"
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repository/pg"
 	"github.com/RafaLopesMelo/go-video-encoder/test"
 	"github.com/stretchr/testify/require"
 )
-
-var videoId *vo.UniqueEntityID
-
-func jobTestSetup() {
-	connection := pg.NewConnection()
-	repo := pg.NewVideosRepository(connection)
-
-	video := test.DummyVideo()
-	repo.Save(video)
-	videoId = video.Video().ID
-}
 
 func TestCreateJob(t *testing.T) {
 	connection := pg.NewConnection()

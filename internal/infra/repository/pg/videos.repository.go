@@ -2,6 +2,7 @@ package pg
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	domainerrors "github.com/RafaLopesMelo/go-video-encoder/internal/domain/errors"
@@ -37,7 +38,7 @@ func (r *VideosRepository) Save(validated *entity.ValidatedVideo) error {
 	)
 
 	if err != nil {
-		return err
+		return fmt.Errorf("error saving video: %w", err)
 	}
 
 	return nil
@@ -57,7 +58,7 @@ func (r *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, error)
 			return nil, domainerrors.EntityNotFound
 		}
 
-		return nil, err
+		return nil, fmt.Errorf("error finding video by id: %w", err)
 	}
 
 	dto := persistenceVideoDto{}
@@ -67,7 +68,7 @@ func (r *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, error)
 	)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error scanning video: %w", err)
 	}
 
 	mapper := newVideoMapper()
