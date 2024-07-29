@@ -1,21 +1,28 @@
 package entity
 
 type ValidatedResource struct {
-	resource Resource
+	rw ResourceWrapper
 }
 
-func (vr ValidatedResource) Resource() Resource {
-	return vr.resource
+func (vr ValidatedResource) Wrapper() ResourceWrapper {
+	return vr.rw
 }
 
-func NewValidatedResource(resource Resource) (*ValidatedResource, error) {
-	err := resource.validate()
+func NewValidatedResource(rw ResourceWrapper) (*ValidatedResource, error) {
+	err := rw.validate()
+
+	if err != nil {
+		return nil, err
+	}
+
+	resource := rw.Resource()
+	err = resource.validate()
 
 	if err != nil {
 		return nil, err
 	}
 
 	return &ValidatedResource{
-		resource: resource,
+		rw: rw,
 	}, nil
 }

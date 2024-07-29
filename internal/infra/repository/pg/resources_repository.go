@@ -12,7 +12,7 @@ type ResourcesRepository struct {
 }
 
 func (r *ResourcesRepository) Save(validated *entity.ValidatedResource) error {
-	resource := validated.Resource()
+	rw := validated.Wrapper()
 
 	stmt := `
         INSERT INTO resource
@@ -33,7 +33,7 @@ func (r *ResourcesRepository) Save(validated *entity.ValidatedResource) error {
     `
 
 	mapper := newResourcesMapper()
-	data := mapper.ToPersistence(resource)
+	data := mapper.ToPersistence(rw)
 
 	_, err := r.connection.DB.Exec(
 		stmt,
@@ -45,7 +45,7 @@ func (r *ResourcesRepository) Save(validated *entity.ValidatedResource) error {
 		data.size,
 		data.path,
 		data.upload_url,
-		"{}",
+		data.metadata,
 	)
 
 	if err != nil {
@@ -55,9 +55,9 @@ func (r *ResourcesRepository) Save(validated *entity.ValidatedResource) error {
 	return nil
 }
 
-func (r *ResourcesRepository) FindByID(id vo.UniqueEntityID) (*entity.Resource, error) {
+func (r *ResourcesRepository) FindByID(id vo.UniqueEntityID) (entity.ResourceWrapper, error) {
 	stmt := `
-        SELECT id, status, kind, video_id, storage_provider, size, path, upload_url FROM resource WHERE id = $1
+        SELECT id, status, kind, video_id, storage_provider, size, path, upload_url, metadata FROM resource WHERE id = $1
     `
 
 	result := r.connection.DB.QueryRow(stmt, id.Value())
@@ -73,6 +73,7 @@ func (r *ResourcesRepository) FindByID(id vo.UniqueEntityID) (*entity.Resource, 
 		&dto.size,
 		&dto.path,
 		&dto.upload_url,
+		&dto.metadata,
 	)
 
 	if err != nil {
@@ -80,7 +81,11 @@ func (r *ResourcesRepository) FindByID(id vo.UniqueEntityID) (*entity.Resource, 
 	}
 
 	mapper := newResourcesMapper()
-	entity := mapper.ToEntity(dto)
+	entity, err := mapper.ToEntity(dto)
+
+	if err != nil {
+		return nil, fmt.Errorf("error mapping resource: %w", err)
+	}
 
 	return entity, nil
 }

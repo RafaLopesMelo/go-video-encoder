@@ -9,32 +9,36 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestValidResource(t *testing.T) {
-	resource := entity.NewResource(entity.NewResourceDto{
-		Kind:            entity.ResourceKindRawVideo,
-		VideoID:         vo.NewID(),
-		StorageProvider: entity.ResourceStorageProviderGCP,
-		Path:            "/test",
-		UploadURL:       "/test",
-		Size:            100,
+func TestValidRawVideo(t *testing.T) {
+	rv := entity.NewRawVideo(entity.NewRawVideoDto{
+		Extension: "mp4",
+		NewResourceDto: entity.NewResourceDto{
+			VideoID:         vo.NewID(),
+			StorageProvider: entity.ResourceStorageProviderGCP,
+			Path:            "/test",
+			UploadURL:       "/test",
+			Size:            100,
+		},
 	}, nil)
 
-	_, err := entity.NewValidatedResource(*resource)
+	_, err := entity.NewValidatedResource(*rv)
 
 	require.Nil(t, err)
 }
 
 func TestResourceWithoutVideoID(t *testing.T) {
-	resource := entity.NewResource(entity.NewResourceDto{
-		Kind:            entity.ResourceKindRawVideo,
-		VideoID:         nil,
-		StorageProvider: entity.ResourceStorageProviderGCP,
-		Path:            "/test",
-		UploadURL:       "/test",
-		Size:            100,
+	rv := entity.NewRawVideo(entity.NewRawVideoDto{
+		Extension: "mp4",
+		NewResourceDto: entity.NewResourceDto{
+			VideoID:         nil,
+			StorageProvider: entity.ResourceStorageProviderGCP,
+			Path:            "/test",
+			UploadURL:       "/test",
+			Size:            100,
+		},
 	}, nil)
 
-	_, err := entity.NewValidatedResource(*resource)
+	_, err := entity.NewValidatedResource(*rv)
 
 	require.ErrorIs(t, err, domainerrors.RequiredProperty)
 }

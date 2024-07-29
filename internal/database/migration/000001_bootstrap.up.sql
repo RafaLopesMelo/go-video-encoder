@@ -30,7 +30,8 @@ CREATE TYPE "resource_kind" AS ENUM (
 
 CREATE TYPE "resource_status" AS ENUM (
     'ACTIVE',
-    'DELETED'
+    'DELETED',
+    'PENDING'
 );
 
 CREATE TABLE "video" (

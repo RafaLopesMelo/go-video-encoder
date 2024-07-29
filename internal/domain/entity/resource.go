@@ -21,11 +21,12 @@ const (
 type ResourceStatus string
 
 const (
+	ResourceStatusPending ResourceStatus = "PENDING"
 	ResourceStatusActive  ResourceStatus = "ACTIVE"
 	ResourceStatusDeleted ResourceStatus = "DELETED"
 )
 
-type Resource struct {
+type resource struct {
 	ID              *vo.UniqueEntityID
 	Status          ResourceStatus
 	Kind            ResourceKind
@@ -36,32 +37,19 @@ type Resource struct {
 	Size            int
 }
 
+type ResourceWrapper interface {
+	ID() vo.UniqueEntityID
+	Resource() *resource
+	validate() error
+	Metadata() map[string]any
+}
+
 type NewResourceDto struct {
-	Kind            ResourceKind
 	VideoID         *vo.UniqueEntityID
 	StorageProvider ResourceStorageProvider
 	Path            string
 	UploadURL       string
 	Size            int
-}
-
-func NewResource(input NewResourceDto, id *vo.UniqueEntityID) *Resource {
-	if id == nil {
-		id = vo.NewID()
-	}
-
-	resource := Resource{
-		ID:              id,
-		Kind:            input.Kind,
-		Status:          ResourceStatusActive,
-		VideoID:         input.VideoID,
-		StorageProvider: input.StorageProvider,
-		Path:            input.Path,
-		UploadURL:       input.UploadURL,
-		Size:            input.Size,
-	}
-
-	return &resource
 }
 
 type LoadResourceDto struct {
@@ -74,8 +62,8 @@ type LoadResourceDto struct {
 	Size            int
 }
 
-func NewResourceFromDto(dto LoadResourceDto, id *vo.UniqueEntityID) *Resource {
-	resource := Resource{
+func NewResourceFromDto(dto LoadResourceDto, id *vo.UniqueEntityID) *resource {
+	resource := resource{
 		ID:              id,
 		Status:          dto.Status,
 		Kind:            dto.Kind,
@@ -89,7 +77,7 @@ func NewResourceFromDto(dto LoadResourceDto, id *vo.UniqueEntityID) *Resource {
 	return &resource
 }
 
-func (resource *Resource) validate() error {
+func (resource *resource) validate() error {
 	if resource.VideoID == nil {
 		return domainerrors.RequiredProperty
 	}

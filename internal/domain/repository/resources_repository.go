@@ -7,5 +7,5 @@ import (
 
 type ResourcesRepository interface {
 	Save(resource *entity.ValidatedResource) error
-	FindByID(id vo.UniqueEntityID) (*entity.Resource, error)
+	FindByID(id vo.UniqueEntityID) (*entity.ResourceWrapper, error)
 }

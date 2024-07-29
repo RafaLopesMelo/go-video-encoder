@@ -13,32 +13,34 @@ func TestCreateResource(t *testing.T) {
 	connection := pg.NewConnection()
 	repo := pg.NewResourcesRepository(connection)
 
-	dummy := test.DummyResource(videoId)
+	dummy := test.DummyRawVideo(videoId)
+	rw := dummy.Wrapper()
 
 	err := repo.Save(dummy)
 	require.Nil(t, err)
 
-	resource, err := repo.FindByID(*dummy.Resource().ID)
+	resource, err := repo.FindByID(rw.ID())
 
 	require.Nil(t, err)
-	require.Equal(t, dummy.Resource().ID, resource.ID)
+	require.Equal(t, rw.ID(), resource.ID())
 }
 
 func TestUpdateResource(t *testing.T) {
 	connection := pg.NewConnection()
 	repo := pg.NewResourcesRepository(connection)
 
-	dummy := test.DummyResource(videoId)
+	dummy := test.DummyRawVideo(videoId)
 	repo.Save(dummy)
 
-	resource := dummy.Resource()
+	rw := dummy.Wrapper()
+	resource := rw.Resource()
 	resource.Path = "/test"
-	validated, _ := entity.NewValidatedResource(resource)
+	validated, _ := entity.NewValidatedResource(rw)
 
 	repo.Save(validated)
-	updated, err := repo.FindByID(*resource.ID)
+	updated, err := repo.FindByID(rw.ID())
 
 	require.Nil(t, err)
-	require.Equal(t, resource.ID, updated.ID)
-	require.Equal(t, resource.Path, updated.Path)
+	require.Equal(t, rw.ID(), updated.ID())
+	require.Equal(t, resource.Path, updated.Resource().Path)
 }

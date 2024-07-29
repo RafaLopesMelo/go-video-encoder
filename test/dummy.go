@@ -36,19 +36,21 @@ func DummyJob(videoId *vo.UniqueEntityID) *entity.ValidatedJob {
 	return validated
 }
 
-func DummyResource(videoId *vo.UniqueEntityID) *entity.ValidatedResource {
+func DummyRawVideo(videoId *vo.UniqueEntityID) *entity.ValidatedResource {
 	id := vo.NewID()
 
-	resource := entity.NewResource(entity.NewResourceDto{
-		Kind:            entity.ResourceKindRawVideo,
-		VideoID:         videoId,
-		StorageProvider: entity.ResourceStorageProviderGCP,
-		Path:            "/test",
-		UploadURL:       "/test",
-		Size:            100,
+	rv := entity.NewRawVideo(entity.NewRawVideoDto{
+		NewResourceDto: entity.NewResourceDto{
+			VideoID:         videoId,
+			StorageProvider: entity.ResourceStorageProviderGCP,
+			Path:            "/test",
+			UploadURL:       "/test",
+			Size:            100,
+		},
+		Extension: "mp4",
 	}, id)
 
-	validated, err := entity.NewValidatedResource(*resource)
+	validated, err := entity.NewValidatedResource(*rv)
 
 	if err != nil {
 		panic("Dummy resource not being built properly")
