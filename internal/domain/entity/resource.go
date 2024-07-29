@@ -52,31 +52,6 @@ type NewResourceDto struct {
 	Size            int
 }
 
-type LoadResourceDto struct {
-	Status          ResourceStatus
-	Kind            ResourceKind
-	VideoID         *vo.UniqueEntityID
-	StorageProvider ResourceStorageProvider
-	Path            string
-	UploadURL       string
-	Size            int
-}
-
-func NewResourceFromDto(dto LoadResourceDto, id *vo.UniqueEntityID) *resource {
-	resource := resource{
-		ID:              id,
-		Status:          dto.Status,
-		Kind:            dto.Kind,
-		VideoID:         dto.VideoID,
-		StorageProvider: dto.StorageProvider,
-		Path:            dto.Path,
-		UploadURL:       dto.UploadURL,
-		Size:            dto.Size,
-	}
-
-	return &resource
-}
-
 func (resource *resource) validate() error {
 	if resource.VideoID == nil {
 		return domainerrors.RequiredProperty

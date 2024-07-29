@@ -52,10 +52,13 @@ func (m *resourcesMapper) ToEntity(dto persistenceResourceDto) (entity.ResourceW
 	metadata := dto.metadata.ToMap()
 
 	if dto.kind == entity.ResourceKindRawVideo {
-		return entity.NewRawVideo(entity.NewRawVideoDto{
+		rv := entity.NewRawVideo(entity.NewRawVideoDto{
 			NewResourceDto: resource,
 			Extension:      metadata["extension"].(string),
-		}, id), nil
+		}, id)
+
+		rv.Resource().Status = dto.status
+		return rv, nil
 	}
 
 	return nil, domainerrors.InvalidResourceKind
