@@ -3,11 +3,11 @@ package video
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/gateway"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/repository"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/repo"
 )
 
 type RegisterUseCase struct {
-	vr       repository.VideosRepository
+	vr       repo.VideosRepository
 	uploader gateway.Uploader
 }
 

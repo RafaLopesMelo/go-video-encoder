@@ -1,4 +1,4 @@
-package repository
+package repo
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
