@@ -3,9 +3,9 @@ package router
 import (
 	"net/http"
 
-	"github.com/RafaLopesMelo/go-video-encoder/internal/app/query"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/app/usecase/hc"
 )
 
 func Setup() {
-	http.HandleFunc("GET /hc", query.NewHcController().Handle)
+	http.HandleFunc("GET /hc", hc.NewCheckController().Handle)
 }
