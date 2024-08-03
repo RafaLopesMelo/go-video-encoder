@@ -4,14 +4,14 @@ import (
 	"testing"
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repository/pg"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repo/pg"
 	"github.com/RafaLopesMelo/go-video-encoder/test"
 	"github.com/stretchr/testify/require"
 )
 
 func TestCreateResource(t *testing.T) {
 	connection := pg.NewConnection()
-	repo := pg.NewResourcesRepository(connection)
+	repo := pg.NewResourcesRepo(connection)
 
 	dummy := test.DummyRawVideo(videoId)
 	rw := dummy.Wrapper()
@@ -27,7 +27,7 @@ func TestCreateResource(t *testing.T) {
 
 func TestUpdateResource(t *testing.T) {
 	connection := pg.NewConnection()
-	repo := pg.NewResourcesRepository(connection)
+	repo := pg.NewResourcesRepo(connection)
 
 	dummy := test.DummyRawVideo(videoId)
 	repo.Save(dummy)

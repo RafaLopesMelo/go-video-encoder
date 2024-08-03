@@ -12,7 +12,7 @@ func TestLoadEnv(t *testing.T) {
 	file, err := os.CreateTemp(".", ".env-*")
 
 	if err != nil {
-		t.Errorf("Could not create env temp file")
+		t.Errorf("could not create env temp file")
 		return
 	}
 

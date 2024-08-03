@@ -7,11 +7,11 @@ import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
-type ResourcesRepository struct {
+type ResourcesRepo struct {
 	connection *connection
 }
 
-func (r *ResourcesRepository) Save(validated *entity.ValidatedResource) error {
+func (r *ResourcesRepo) Save(validated *entity.ValidatedResource) error {
 	rw := validated.Wrapper()
 
 	stmt := `
@@ -55,7 +55,7 @@ func (r *ResourcesRepository) Save(validated *entity.ValidatedResource) error {
 	return nil
 }
 
-func (r *ResourcesRepository) FindByID(id vo.UniqueEntityID) (entity.ResourceWrapper, error) {
+func (r *ResourcesRepo) FindByID(id vo.UniqueEntityID) (entity.ResourceWrapper, error) {
 	stmt := `
         SELECT id, status, kind, video_id, storage_provider, size, path, upload_url, metadata FROM resource WHERE id = $1
     `
@@ -90,8 +90,8 @@ func (r *ResourcesRepository) FindByID(id vo.UniqueEntityID) (entity.ResourceWra
 	return entity, nil
 }
 
-func NewResourcesRepository(connection *connection) *ResourcesRepository {
-	repository := ResourcesRepository{
+func NewResourcesRepo(connection *connection) *ResourcesRepo {
+	repository := ResourcesRepo{
 		connection: connection,
 	}
 

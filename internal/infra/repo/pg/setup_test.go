@@ -6,7 +6,7 @@ import (
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/config/env"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repository/pg"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repo/pg"
 	"github.com/RafaLopesMelo/go-video-encoder/test"
 )
 
@@ -20,7 +20,7 @@ func TestMain(m *testing.M) {
 	}
 
 	connection := pg.NewConnection()
-	repo := pg.NewVideosRepository(connection)
+	repo := pg.NewVideosRepo(connection)
 
 	video := test.DummyVideo()
 	repo.Save(video)

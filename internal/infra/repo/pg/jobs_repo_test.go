@@ -4,14 +4,14 @@ import (
 	"testing"
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repository/pg"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repo/pg"
 	"github.com/RafaLopesMelo/go-video-encoder/test"
 	"github.com/stretchr/testify/require"
 )
 
 func TestCreateJob(t *testing.T) {
 	connection := pg.NewConnection()
-	repo := pg.NewJobsRepository(connection)
+	repo := pg.NewJobsRepo(connection)
 
 	dummy := test.DummyJob(videoId)
 
@@ -26,7 +26,7 @@ func TestCreateJob(t *testing.T) {
 
 func TestUpdateJob(t *testing.T) {
 	connection := pg.NewConnection()
-	repo := pg.NewJobsRepository(connection)
+	repo := pg.NewJobsRepo(connection)
 
 	dummy := test.DummyJob(videoId)
 	repo.Save(dummy)

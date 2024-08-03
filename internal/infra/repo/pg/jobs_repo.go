@@ -19,11 +19,11 @@ type persistenceJobDto struct {
 	error         string
 }
 
-type JobsRepository struct {
+type JobsRepo struct {
 	connection *connection
 }
 
-func (r *JobsRepository) Save(validated *entity.ValidatedJob) error {
+func (r *JobsRepo) Save(validated *entity.ValidatedJob) error {
 	job := validated.Job()
 
 	stmt := `
@@ -63,7 +63,7 @@ func (r *JobsRepository) Save(validated *entity.ValidatedJob) error {
 	return nil
 }
 
-func (r *JobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
+func (r *JobsRepo) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
 	stmt := `
         SELECT id, status, kind, video_id, resource_id, depends_on_id, error  FROM job WHERE id = $1
     `
@@ -101,8 +101,8 @@ func (r *JobsRepository) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
 	return entity, nil
 }
 
-func NewJobsRepository(connection *connection) *JobsRepository {
-	repository := JobsRepository{
+func NewJobsRepo(connection *connection) *JobsRepo {
+	repository := JobsRepo{
 		connection: connection,
 	}
 

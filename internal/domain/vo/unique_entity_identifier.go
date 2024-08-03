@@ -6,7 +6,7 @@ type UniqueEntityID struct {
 	value string
 }
 
-func (id *UniqueEntityID) Value() string {
+func (id UniqueEntityID) Value() string {
 	return id.value
 }
 

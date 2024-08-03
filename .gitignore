@@ -3,3 +3,6 @@
 
 # FORMATTER
 **/**/.null-ls*
+
+# GCP
+gcp-credentials.json

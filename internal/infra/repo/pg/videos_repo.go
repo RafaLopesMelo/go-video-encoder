@@ -9,11 +9,11 @@ import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
-type VideosRepository struct {
+type VideosRepo struct {
 	connection *connection
 }
 
-func (r *VideosRepository) Save(validated *entity.ValidatedVideo) error {
+func (r *VideosRepo) Save(validated *entity.ValidatedVideo) error {
 	video := validated.Video()
 
 	stmt := `
@@ -44,7 +44,7 @@ func (r *VideosRepository) Save(validated *entity.ValidatedVideo) error {
 	return nil
 }
 
-func (r *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, error) {
+func (r *VideosRepo) FindByID(id vo.UniqueEntityID) (*entity.Video, error) {
 	stmt := `
         SELECT id, status FROM video WHERE id = $1
     `
@@ -77,8 +77,8 @@ func (r *VideosRepository) FindByID(id vo.UniqueEntityID) (*entity.Video, error)
 	return entity, nil
 }
 
-func NewVideosRepository(connection *connection) *VideosRepository {
-	repository := VideosRepository{
+func NewVideosRepo(connection *connection) *VideosRepo {
+	repository := VideosRepo{
 		connection: connection,
 	}
 

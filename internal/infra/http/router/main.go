@@ -3,7 +3,7 @@ package router
 import (
 	"net/http"
 
-	"github.com/RafaLopesMelo/go-video-encoder/internal/application/query"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/app/query"
 )
 
 func Setup() {
