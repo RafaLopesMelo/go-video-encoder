@@ -28,3 +28,9 @@ func (c RegisterVideoController) Handle(w http.ResponseWriter, r *http.Request) 
 		UploadURL: video.UploadURL,
 	})
 }
+
+func NewRegisterVideoController(uc RegisterUseCase) RegisterVideoController {
+	return RegisterVideoController{
+		uc: uc,
+	}
+}

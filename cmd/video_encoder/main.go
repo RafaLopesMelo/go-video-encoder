@@ -8,10 +8,13 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/config/env"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/http/router"
 )
 
 func main() {
+	env.Load(".env")
+
 	router.Setup()
 	srv := http.Server{
 		Addr: ":3000",
