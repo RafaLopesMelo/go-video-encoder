@@ -73,7 +73,7 @@ type LoadJobDto struct {
 	Error       string
 }
 
-func LoadJob(input LoadJobDto, id *vo.UniqueEntityID) *Job {
+func LoadJob(input LoadJobDto, id *vo.UniqueEntityID) Job {
 	job := Job{
 		ID:          id,
 		Status:      input.Status,
@@ -84,7 +84,7 @@ func LoadJob(input LoadJobDto, id *vo.UniqueEntityID) *Job {
 		Error:       input.Error,
 	}
 
-	return &job
+	return job
 }
 
 func (job *Job) validate() error {

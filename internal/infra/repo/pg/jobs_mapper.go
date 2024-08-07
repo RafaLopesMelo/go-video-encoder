@@ -10,7 +10,7 @@ import (
 type jobMapper struct {
 }
 
-func (m jobMapper) ToEntity(dto persistenceJobDto) *entity.Job {
+func (m jobMapper) ToEntity(dto persistenceJobDto) entity.Job {
 	ID := vo.NewIDFromValue(dto.id)
 	videoID := vo.NewIDFromValue(dto.video_id)
 
@@ -34,8 +34,8 @@ func (m jobMapper) ToEntity(dto persistenceJobDto) *entity.Job {
 	}, ID)
 }
 
-func (m jobMapper) ToPersistence(entity entity.Job) *persistenceJobDto {
-	dto := &persistenceJobDto{}
+func (m jobMapper) ToPersistence(entity entity.Job) persistenceJobDto {
+	dto := persistenceJobDto{}
 
 	dto.id = entity.ID.Value()
 	dto.status = entity.Status

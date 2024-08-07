@@ -13,8 +13,8 @@ type persistenceVideoDto struct {
 type videoMapper struct {
 }
 
-func (m videoMapper) ToPersistence(entity entity.Video) *persistenceVideoDto {
-	dto := &persistenceVideoDto{}
+func (m videoMapper) ToPersistence(entity entity.Video) persistenceVideoDto {
+	dto := persistenceVideoDto{}
 
 	dto.id = entity.ID.Value()
 	dto.status = entity.Status
@@ -22,7 +22,7 @@ func (m videoMapper) ToPersistence(entity entity.Video) *persistenceVideoDto {
 	return dto
 }
 
-func (m videoMapper) ToEntity(dto persistenceVideoDto) *entity.Video {
+func (m videoMapper) ToEntity(dto persistenceVideoDto) entity.Video {
 	id := vo.NewIDFromValue(dto.id)
 
 	return entity.LoadVideo(entity.LoadVideoDto{

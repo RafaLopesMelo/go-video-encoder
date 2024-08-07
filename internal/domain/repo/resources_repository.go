@@ -6,6 +6,6 @@ import (
 )
 
 type ResourcesRepository interface {
-	Save(resource *entity.ValidatedResource) error
-	FindByID(id vo.UniqueEntityID) (*entity.ResourceWrapper, error)
+	Save(resource entity.ValidatedResource) error
+	FindByID(id vo.UniqueEntityID) (entity.ResourceWrapper, error)
 }

@@ -39,13 +39,13 @@ type LoadVideoDto struct {
 	Status VideoStatus
 }
 
-func LoadVideo(input LoadVideoDto, id *vo.UniqueEntityID) *Video {
+func LoadVideo(input LoadVideoDto, id *vo.UniqueEntityID) Video {
 	video := Video{
 		ID:     id,
 		Status: input.Status,
 	}
 
-	return &video
+	return video
 }
 
 func (video *Video) validate() error {

@@ -23,7 +23,7 @@ type JobsRepo struct {
 	connection *connection
 }
 
-func (r *JobsRepo) Save(validated *entity.ValidatedJob) error {
+func (r *JobsRepo) Save(validated entity.ValidatedJob) error {
 	job := validated.Job()
 
 	stmt := `
@@ -63,7 +63,7 @@ func (r *JobsRepo) Save(validated *entity.ValidatedJob) error {
 	return nil
 }
 
-func (r *JobsRepo) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
+func (r *JobsRepo) FindByID(id vo.UniqueEntityID) (entity.Job, error) {
 	stmt := `
         SELECT id, status, kind, video_id, resource_id, depends_on_id, error  FROM job WHERE id = $1
     `
@@ -74,10 +74,10 @@ func (r *JobsRepo) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return nil, domainerrors.EntityNotFound
+			return entity.Job{}, domainerrors.EntityNotFound
 		}
 
-		return nil, fmt.Errorf("error finding job by id: %w", err)
+		return entity.Job{}, fmt.Errorf("error finding job by id: %w", err)
 	}
 
 	dto := persistenceJobDto{}
@@ -92,7 +92,7 @@ func (r *JobsRepo) FindByID(id vo.UniqueEntityID) (*entity.Job, error) {
 	)
 
 	if err != nil {
-		return nil, fmt.Errorf("error scanning job: %w", err)
+		return entity.Job{}, fmt.Errorf("error scanning job: %w", err)
 	}
 
 	mapper := newJobMapper()

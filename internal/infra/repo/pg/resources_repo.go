@@ -11,7 +11,7 @@ type ResourcesRepo struct {
 	connection *connection
 }
 
-func (r *ResourcesRepo) Save(validated *entity.ValidatedResource) error {
+func (r *ResourcesRepo) Save(validated entity.ValidatedResource) error {
 	rw := validated.Wrapper()
 
 	stmt := `

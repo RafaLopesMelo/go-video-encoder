@@ -13,7 +13,7 @@ type VideosRepo struct {
 	connection *connection
 }
 
-func (r *VideosRepo) Save(validated *entity.ValidatedVideo) error {
+func (r *VideosRepo) Save(validated entity.ValidatedVideo) error {
 	video := validated.Video()
 
 	stmt := `
@@ -44,7 +44,7 @@ func (r *VideosRepo) Save(validated *entity.ValidatedVideo) error {
 	return nil
 }
 
-func (r *VideosRepo) FindByID(id vo.UniqueEntityID) (*entity.Video, error) {
+func (r *VideosRepo) FindByID(id vo.UniqueEntityID) (entity.Video, error) {
 	stmt := `
         SELECT id, status FROM video WHERE id = $1
     `
@@ -55,10 +55,10 @@ func (r *VideosRepo) FindByID(id vo.UniqueEntityID) (*entity.Video, error) {
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return nil, domainerrors.EntityNotFound
+			return entity.Video{}, domainerrors.EntityNotFound
 		}
 
-		return nil, fmt.Errorf("error finding video by id: %w", err)
+		return entity.Video{}, fmt.Errorf("error finding video by id: %w", err)
 	}
 
 	dto := persistenceVideoDto{}
@@ -68,7 +68,7 @@ func (r *VideosRepo) FindByID(id vo.UniqueEntityID) (*entity.Video, error) {
 	)
 
 	if err != nil {
-		return nil, fmt.Errorf("error scanning video: %w", err)
+		return entity.Video{}, fmt.Errorf("error scanning video: %w", err)
 	}
 
 	mapper := newVideoMapper()

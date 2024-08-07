@@ -24,7 +24,7 @@ func TestMain(m *testing.M) {
 
 func TestPrepare(t *testing.T) {
 	fmt.Println("TestPrepare")
-	u := gcp.Uploader{}
+	u := gcp.NewUploader()
 
 	videoID := vo.NewID()
 

@@ -5,7 +5,7 @@ import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/vo"
 )
 
-func DummyVideo() *entity.ValidatedVideo {
+func DummyVideo() entity.ValidatedVideo {
 	id := vo.NewID()
 
 	video := entity.NewVideo(entity.NewVideoDto{}, id)
@@ -19,7 +19,7 @@ func DummyVideo() *entity.ValidatedVideo {
 	return validated
 }
 
-func DummyJob(videoId *vo.UniqueEntityID) *entity.ValidatedJob {
+func DummyJob(videoId *vo.UniqueEntityID) entity.ValidatedJob {
 	id := vo.NewID()
 
 	job := entity.NewJob(entity.NewJobDto{
@@ -36,7 +36,7 @@ func DummyJob(videoId *vo.UniqueEntityID) *entity.ValidatedJob {
 	return validated
 }
 
-func DummyRawVideo(videoId *vo.UniqueEntityID) *entity.ValidatedResource {
+func DummyRawVideo(videoId *vo.UniqueEntityID) entity.ValidatedResource {
 	id := vo.NewID()
 
 	rv := entity.NewRawVideo(entity.NewRawVideoDto{

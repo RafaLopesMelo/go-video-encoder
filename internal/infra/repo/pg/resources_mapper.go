@@ -21,12 +21,12 @@ type persistenceResourceDto struct {
 type resourcesMapper struct {
 }
 
-func (m *resourcesMapper) ToPersistence(rw entity.ResourceWrapper) *persistenceResourceDto {
+func (m *resourcesMapper) ToPersistence(rw entity.ResourceWrapper) persistenceResourceDto {
 	r := rw.Resource()
 
 	jsonable := NewJSONable(rw.Metadata())
 
-	return &persistenceResourceDto{
+	return persistenceResourceDto{
 		id:               r.ID.Value(),
 		status:           r.Status,
 		kind:             r.Kind,

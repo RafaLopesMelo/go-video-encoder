@@ -8,14 +8,14 @@ func (vj ValidatedJob) Job() Job {
 	return vj.job
 }
 
-func NewValidatedJob(job Job) (*ValidatedJob, error) {
+func NewValidatedJob(job Job) (ValidatedJob, error) {
 	err := job.validate()
 
 	if err != nil {
-		return nil, err
+		return ValidatedJob{}, err
 	}
 
-	return &ValidatedJob{
+	return ValidatedJob{
 		job: job,
 	}, nil
 }

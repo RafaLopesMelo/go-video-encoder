@@ -6,6 +6,6 @@ import (
 )
 
 type JobsRepository interface {
-	Save(job *entity.ValidatedJob) error
-	FindByID(id vo.UniqueEntityID) (*entity.Job, error)
+	Save(job entity.ValidatedJob) error
+	FindByID(id vo.UniqueEntityID) (entity.Job, error)
 }

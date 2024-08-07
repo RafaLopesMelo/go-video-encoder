@@ -6,6 +6,6 @@ import (
 )
 
 type VideosRepository interface {
-	Save(video *entity.ValidatedVideo) error
-	FindByID(id vo.UniqueEntityID) (*entity.Video, error)
+	Save(video entity.ValidatedVideo) error
+	FindByID(id vo.UniqueEntityID) (entity.Video, error)
 }
