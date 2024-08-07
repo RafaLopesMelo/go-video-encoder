@@ -16,7 +16,7 @@ func TestCreateVideo(t *testing.T) {
 	dummy := test.DummyVideo()
 
 	err := repo.Save(dummy)
-	require.Nil(t, err)
+	require.NoError(t, err)
 
 	video, err := repo.FindByID(*dummy.Video().ID)
 

@@ -47,7 +47,10 @@ func (r RegisterUseCase) Execute() (CreatedVideo, error) {
 	r.vr.Save(vv)
 	r.rr.Save(vr)
 
-	return CreatedVideo{}, nil
+	return CreatedVideo{
+		ID:        vv.Video().ID.Value(),
+		UploadURL: prepared.URL,
+	}, nil
 }
 
 func NewRegisterUseCase(vr repo.VideosRepository, rr repo.ResourcesRepository, uploader gateway.Uploader) RegisterUseCase {

@@ -12,5 +12,5 @@ func TestValidVideo(t *testing.T) {
 
 	_, err := entity.NewValidatedVideo(*video)
 
-	require.Nil(t, err)
+	require.NoError(t, err)
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/config/env"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/gateway/gcp"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repo/pg"
+	"github.com/stretchr/testify/require"
 )
 
 func TestMain(m *testing.M) {
@@ -28,5 +29,9 @@ func TestRegisterVideo(t *testing.T) {
 
 	uc := video.NewRegisterUseCase(rv, rr, u)
 
-	uc.Execute()
+	created, err := uc.Execute()
+
+	require.NoError(t, err)
+	require.NotEmpty(t, created.ID)
+	require.NotEmpty(t, created.UploadURL)
 }

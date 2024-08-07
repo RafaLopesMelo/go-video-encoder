@@ -23,7 +23,7 @@ func TestValidRawVideo(t *testing.T) {
 
 	_, err := entity.NewValidatedResource(*rv)
 
-	require.Nil(t, err)
+	require.NoError(t, err)
 }
 
 func TestRawVideoWithoutExtension(t *testing.T) {

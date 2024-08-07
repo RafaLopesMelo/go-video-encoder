@@ -17,7 +17,7 @@ func TestCreateResource(t *testing.T) {
 	rw := dummy.Wrapper()
 
 	err := repo.Save(dummy)
-	require.Nil(t, err)
+	require.NoError(t, err)
 
 	resource, err := repo.FindByID(rw.ID())
 

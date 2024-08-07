@@ -20,7 +20,7 @@ func TestCreateJob(t *testing.T) {
 
 	job, err := repo.FindByID(*dummy.Job().ID)
 
-	require.Nil(t, err)
+	require.NoError(t, err)
 	require.Equal(t, dummy.Job().ID, job.ID)
 }
 
