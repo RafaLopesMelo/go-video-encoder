@@ -10,6 +10,7 @@ import (
 )
 
 type Router struct {
+	mux         *http.ServeMux
 	middlewares []Middleware
 }
 
@@ -44,9 +45,12 @@ func (r *Router) addRoute(pattern string, handler Handler) {
 	}
 
 	wrapped := r.httpWrapper(handler)
-	http.HandleFunc(pattern, wrapped)
+	r.mux.HandleFunc(pattern, wrapped)
 }
 
-func NewRouter() *Router {
-	return &Router{}
+func New(mux *http.ServeMux) *Router {
+	return &Router{
+		mux:         mux,
+		middlewares: []Middleware{},
+	}
 }

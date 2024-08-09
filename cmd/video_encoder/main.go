@@ -16,11 +16,14 @@ import (
 func main() {
 	env.Load(".env")
 
-	r := router.NewRouter()
+	mux := http.NewServeMux()
+	r := router.New(mux)
 	r.Use(middleware.JSON)
 	r.Setup()
+
 	srv := http.Server{
-		Addr: ":3000",
+		Addr:    ":3000",
+		Handler: mux,
 	}
 
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
