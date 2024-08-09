@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/RafaLopesMelo/go-video-encoder/internal/app/middleware"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/config/env"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/http/router"
 )
@@ -15,7 +16,9 @@ import (
 func main() {
 	env.Load(".env")
 
-	router.Setup()
+	r := router.NewRouter()
+	r.Use(middleware.JSON)
+	r.Setup()
 	srv := http.Server{
 		Addr: ":3000",
 	}
@@ -23,6 +26,7 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
+	log.Println("Server is running on port 3000")
 	go func() {
 		err := srv.ListenAndServe()
 		if err != nil && !errors.Is(err, http.ErrServerClosed) {

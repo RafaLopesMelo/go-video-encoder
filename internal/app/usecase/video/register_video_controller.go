@@ -1,7 +1,6 @@
 package video
 
 import (
-	"encoding/json"
 	"net/http"
 )
 
@@ -14,19 +13,18 @@ type RegisterVideoResponse struct {
 	UploadURL string `json:"uploadUrl"`
 }
 
-func (c RegisterVideoController) Handle(w http.ResponseWriter, r *http.Request) {
+func (c RegisterVideoController) Handle(w http.ResponseWriter, r *http.Request) any {
 	video, err := c.uc.Execute()
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		return nil
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(RegisterVideoResponse{
+	return RegisterVideoResponse{
 		ID:        video.ID,
 		UploadURL: video.UploadURL,
-	})
+	}
 }
 
 func NewRegisterVideoController(uc RegisterUseCase) RegisterVideoController {
