@@ -6,7 +6,6 @@ import (
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/app/usecase/video"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/config/env"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/gateway/gcp"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repo/pg"
 	"github.com/stretchr/testify/require"
 )
@@ -25,9 +24,8 @@ func TestRegisterVideo(t *testing.T) {
 	connection := pg.NewConnection()
 	rv := pg.NewVideosRepo(connection)
 	rr := pg.NewResourcesRepo(connection)
-	u := gcp.NewUploader()
 
-	uc := video.NewRegisterUseCase(rv, rr, u)
+	uc := video.NewRegisterUseCase(rv, rr)
 
 	created, err := uc.Execute()
 

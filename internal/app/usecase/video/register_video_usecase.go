@@ -2,14 +2,13 @@ package video
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/gateway"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/repo"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/config/env"
 )
 
 type RegisterUseCase struct {
-	vr       repo.VideosRepository
-	rr       repo.ResourcesRepository
-	uploader gateway.Uploader
+	vr repo.VideosRepository
+	rr repo.ResourcesRepository
 }
 
 type CreatedVideo struct {
@@ -19,13 +18,7 @@ type CreatedVideo struct {
 
 func (r RegisterUseCase) Execute() (CreatedVideo, error) {
 	video := entity.NewVideo(entity.NewVideoDto{}, nil)
-	vv, err := entity.NewValidatedVideo(*video)
-
-	if err != nil {
-		return CreatedVideo{}, err
-	}
-
-	prepared, err := r.uploader.Prepare(*vv.Video().ID)
+	vv, err := entity.NewValidatedVideo(video)
 
 	if err != nil {
 		return CreatedVideo{}, err
@@ -33,12 +26,10 @@ func (r RegisterUseCase) Execute() (CreatedVideo, error) {
 
 	raw := entity.NewRawVideo(entity.NewRawVideoDto{
 		NewResourceDto: entity.NewResourceDto{
-			VideoID:         vv.Video().ID,
-			UploadURL:       prepared.URL,
-			StorageProvider: prepared.Provider,
+			VideoID: vv.Video().ID,
 		},
 	}, nil)
-	vr, err := entity.NewValidatedResource(*raw)
+	vr, err := entity.NewValidatedResource(raw)
 
 	if err != nil {
 		return CreatedVideo{}, err
@@ -49,14 +40,13 @@ func (r RegisterUseCase) Execute() (CreatedVideo, error) {
 
 	return CreatedVideo{
 		ID:        vv.Video().ID.Value(),
-		UploadURL: prepared.URL,
+		UploadURL: env.Get("BASE_URL") + "/resources/" + raw.ID().Value() + "/upload",
 	}, nil
 }
 
-func NewRegisterUseCase(vr repo.VideosRepository, rr repo.ResourcesRepository, uploader gateway.Uploader) RegisterUseCase {
+func NewRegisterUseCase(vr repo.VideosRepository, rr repo.ResourcesRepository) RegisterUseCase {
 	return RegisterUseCase{
-		vr:       vr,
-		rr:       rr,
-		uploader: uploader,
+		vr: vr,
+		rr: rr,
 	}
 }

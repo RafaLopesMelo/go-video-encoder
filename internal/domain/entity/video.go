@@ -22,7 +22,7 @@ type Video struct {
 type NewVideoDto struct {
 }
 
-func NewVideo(input NewVideoDto, id *vo.UniqueEntityID) *Video {
+func NewVideo(input NewVideoDto, id *vo.UniqueEntityID) Video {
 	if id == nil {
 		id = vo.NewID()
 	}
@@ -32,7 +32,7 @@ func NewVideo(input NewVideoDto, id *vo.UniqueEntityID) *Video {
 		Status: VideoStatusPending,
 	}
 
-	return &video
+	return video
 }
 
 type LoadVideoDto struct {

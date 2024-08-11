@@ -10,7 +10,7 @@ func DummyVideo() entity.ValidatedVideo {
 
 	video := entity.NewVideo(entity.NewVideoDto{}, id)
 
-	validated, err := entity.NewValidatedVideo(*video)
+	validated, err := entity.NewValidatedVideo(video)
 
 	if err != nil {
 		panic("Dummy video not being built properly")
@@ -27,7 +27,7 @@ func DummyJob(videoId *vo.UniqueEntityID) entity.ValidatedJob {
 		VideoID: videoId,
 	}, nil, id)
 
-	validated, err := entity.NewValidatedJob(*job)
+	validated, err := entity.NewValidatedJob(job)
 
 	if err != nil {
 		panic("Dummy job not being built properly")
@@ -44,13 +44,12 @@ func DummyRawVideo(videoId *vo.UniqueEntityID) entity.ValidatedResource {
 			VideoID:         videoId,
 			StorageProvider: entity.ResourceStorageProviderGCP,
 			Path:            "/test",
-			UploadURL:       "/test",
 			Size:            100,
 		},
 		Extension: "mp4",
 	}, id)
 
-	validated, err := entity.NewValidatedResource(*rv)
+	validated, err := entity.NewValidatedResource(rv)
 
 	if err != nil {
 		panic("Dummy resource not being built properly")

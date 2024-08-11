@@ -14,7 +14,7 @@ func TestNewPendingJob(t *testing.T) {
 		VideoID: vo.NewID(),
 	}, nil, nil)
 
-	validated, err := entity.NewValidatedJob(*job)
+	validated, err := entity.NewValidatedJob(job)
 
 	require.NoError(t, err)
 	require.NotNil(t, validated)
@@ -30,9 +30,9 @@ func TestNewIdleJob(t *testing.T) {
 	job := entity.NewJob(entity.NewJobDto{
 		Kind:    entity.JobKindTranscode,
 		VideoID: vo.NewID(),
-	}, dependency, nil)
+	}, &dependency, nil)
 
-	validated, err := entity.NewValidatedJob(*job)
+	validated, err := entity.NewValidatedJob(job)
 
 	require.NoError(t, err)
 	require.NotNil(t, validated)

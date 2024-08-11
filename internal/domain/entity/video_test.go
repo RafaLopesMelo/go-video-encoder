@@ -10,7 +10,7 @@ import (
 func TestValidVideo(t *testing.T) {
 	video := entity.NewVideo(entity.NewVideoDto{}, nil)
 
-	_, err := entity.NewValidatedVideo(*video)
+	_, err := entity.NewValidatedVideo(video)
 
 	require.NoError(t, err)
 }

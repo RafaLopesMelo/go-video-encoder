@@ -21,7 +21,7 @@ func TestValidRawVideo(t *testing.T) {
 		},
 	}, nil)
 
-	_, err := entity.NewValidatedResource(*rv)
+	_, err := entity.NewValidatedResource(rv)
 
 	require.NoError(t, err)
 }
@@ -39,11 +39,11 @@ func TestRawVideoWithoutExtension(t *testing.T) {
 	}, nil)
 
 	rv.Resource().Status = entity.ResourceStatusPending
-	_, err := entity.NewValidatedResource(*rv)
+	_, err := entity.NewValidatedResource(rv)
 	require.Nil(t, err)
 
 	rv.Resource().Status = entity.ResourceStatusActive
-	_, err = entity.NewValidatedResource(*rv)
+	_, err = entity.NewValidatedResource(rv)
 	require.ErrorIs(t, err, domainerrors.RequiredProperty)
 }
 
@@ -59,7 +59,7 @@ func TestResourceWithoutVideoID(t *testing.T) {
 		},
 	}, nil)
 
-	_, err := entity.NewValidatedResource(*rv)
+	_, err := entity.NewValidatedResource(rv)
 
 	require.ErrorIs(t, err, domainerrors.RequiredProperty)
 }

@@ -36,7 +36,7 @@ type NewJobDto struct {
 	VideoID *vo.UniqueEntityID
 }
 
-func NewJob(input NewJobDto, dependsOn *Job, id *vo.UniqueEntityID) *Job {
+func NewJob(input NewJobDto, dependsOn *Job, id *vo.UniqueEntityID) Job {
 	if id == nil {
 		id = vo.NewID()
 	}
@@ -61,7 +61,7 @@ func NewJob(input NewJobDto, dependsOn *Job, id *vo.UniqueEntityID) *Job {
 		Error:       "",
 	}
 
-	return &job
+	return job
 }
 
 type LoadJobDto struct {

@@ -29,7 +29,7 @@ type NewRawVideoDto struct {
 	Extension string
 }
 
-func NewRawVideo(input NewRawVideoDto, id *vo.UniqueEntityID) *RawVideo {
+func NewRawVideo(input NewRawVideoDto, id *vo.UniqueEntityID) RawVideo {
 	if id == nil {
 		id = vo.NewID()
 	}
@@ -45,7 +45,7 @@ func NewRawVideo(input NewRawVideoDto, id *vo.UniqueEntityID) *RawVideo {
 		Size:            input.Size,
 	}
 
-	return &RawVideo{
+	return RawVideo{
 		resource:  resource,
 		Extension: input.Extension,
 	}
