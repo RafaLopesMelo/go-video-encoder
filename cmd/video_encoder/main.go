@@ -18,7 +18,8 @@ func main() {
 
 	mux := http.NewServeMux()
 	r := router.New(mux)
-	r.Use(middleware.JSON)
+
+	setupMiddlewares(r)
 	r.Setup()
 
 	srv := http.Server{
@@ -43,4 +44,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("server shutdown failed: %v", err)
 	}
+}
+
+func setupMiddlewares(r *router.Router) {
+	r.Use(middleware.JSON)
+	r.Use(middleware.Error)
+	r.Use(middleware.Recover)
 }

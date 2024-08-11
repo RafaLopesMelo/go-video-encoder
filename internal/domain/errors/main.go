@@ -2,8 +2,10 @@ package domainerrors
 
 import "errors"
 
+type DomainError error
+
 var (
-	RequiredProperty    = errors.New("missing required property")
-	EntityNotFound      = errors.New("entity not found")
-	InvalidResourceKind = errors.New("invalid resource kind")
+	RequiredProperty    DomainError = errors.New("missing required property")
+	EntityNotFound      DomainError = errors.New("entity not found")
+	InvalidResourceKind DomainError = errors.New("invalid resource kind")
 )

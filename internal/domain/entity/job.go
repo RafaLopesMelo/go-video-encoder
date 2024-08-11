@@ -8,17 +8,17 @@ import (
 type JobStatus string
 
 const (
-	JobStatusIdle    = "IDLE"
-	JobStatusPending = "PENDING"
-	JobStatusRunning = "RUNNING"
-	JobStatusDone    = "DONE"
-	JobStatusFailed  = "FAILED"
+	JobStatusIdle    JobStatus = "IDLE"
+	JobStatusPending JobStatus = "PENDING"
+	JobStatusRunning JobStatus = "RUNNING"
+	JobStatusDone    JobStatus = "DONE"
+	JobStatusFailed  JobStatus = "FAILED"
 )
 
 type JobKind string
 
 const (
-	JobKindTranscode = "TRANSCODE"
+	JobKindTranscode JobKind = "TRANSCODE"
 )
 
 type Job struct {
