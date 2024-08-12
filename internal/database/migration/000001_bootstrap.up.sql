@@ -48,7 +48,7 @@ CREATE TABLE "job" (
     "video_id"      UUID NOT NULL,
     "resource_id"   UUID NULL,
     "depends_on_id" UUID NULL,
-    "error"         VARCHAR(255) NULL,
+    "error"         TEXT NULL,
     "created_at"    timestamp NOT NULL,
     "updated_at"    timestamp NOT NULL
 );
@@ -60,8 +60,8 @@ CREATE TABLE "resource" (
     "video_id"          UUID NOT NULL,
     "storage_provider"  resource_storage_provider NOT NULL,
     "size"              INT NULL,
-    "path"              VARCHAR(255) NOT NULL,
-    "upload_url"        VARCHAR(255) NOT NULL,
+    "path"              TEXT NOT NULL,
+    "upload_url"        TEXT NOT NULL,
     "metadata"          JSONB NOT NULL,
     "created_at"        timestamp NOT NULL,
     "updated_at"        timestamp NOT NULL

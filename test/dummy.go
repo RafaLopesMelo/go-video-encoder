@@ -43,6 +43,7 @@ func DummyRawVideo(videoId *vo.UniqueEntityID) entity.ValidatedResource {
 		NewResourceDto: entity.NewResourceDto{
 			VideoID:         videoId,
 			StorageProvider: entity.ResourceStorageProviderGCP,
+			UploadURL:       "/test",
 			Path:            "/test",
 			Size:            100,
 		},

@@ -6,6 +6,7 @@ import (
 )
 
 type PreparedUpload struct {
+	Path     string
 	URL      string
 	Provider entity.ResourceStorageProvider
 }

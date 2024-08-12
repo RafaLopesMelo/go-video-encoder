@@ -25,25 +25,33 @@ func (r RegisterUseCase) Execute() (CreatedVideo, error) {
 		return CreatedVideo{}, err
 	}
 
+	prepared, err := r.u.Prepare(*video.ID)
+	if err != nil {
+		return CreatedVideo{}, err
+	}
+
 	raw := entity.NewRawVideo(entity.NewRawVideoDto{
 		NewResourceDto: entity.NewResourceDto{
-			VideoID: vv.Video().ID,
+			VideoID:         vv.Video().ID,
+			StorageProvider: prepared.Provider,
+			UploadURL:       prepared.URL,
+			Path:            prepared.Path,
 		},
 	}, nil)
 	vr, err := entity.NewValidatedResource(raw)
-
 	if err != nil {
 		return CreatedVideo{}, err
 	}
 
-	prepared, err := r.u.Prepare(*video.ID)
-
+	err = r.vr.Save(vv)
 	if err != nil {
 		return CreatedVideo{}, err
 	}
 
-	r.vr.Save(vv)
-	r.rr.Save(vr)
+	err = r.rr.Save(vr)
+	if err != nil {
+		return CreatedVideo{}, err
+	}
 
 	return CreatedVideo{
 		ID:        vv.Video().ID.Value(),

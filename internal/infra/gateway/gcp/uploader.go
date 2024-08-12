@@ -50,6 +50,7 @@ func (u Uploader) Prepare(videoID vo.UniqueEntityID) (gateway.PreparedUpload, er
 	return gateway.PreparedUpload{
 		URL:      url,
 		Provider: entity.ResourceStorageProviderGCP,
+		Path:     obj,
 	}, nil
 }
 

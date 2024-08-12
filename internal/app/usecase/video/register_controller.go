@@ -2,6 +2,8 @@ package video
 
 import (
 	"net/http"
+
+	httperror "github.com/RafaLopesMelo/go-video-encoder/internal/infra/http/error"
 )
 
 type RegisterVideoController struct {
@@ -17,8 +19,7 @@ func (c RegisterVideoController) Handle(w http.ResponseWriter, r *http.Request) 
 	video, err := c.uc.Execute()
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return nil
+		return httperror.NewFromDomain(err)
 	}
 
 	return RegisterVideoResponse{

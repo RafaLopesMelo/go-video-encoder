@@ -52,11 +52,15 @@ func NewRawVideo(input NewRawVideoDto, id *vo.UniqueEntityID) RawVideo {
 }
 
 func (rv *RawVideo) IsActive() bool {
-	return rv.Resource().Status == ResourceStatusActive
+	return rv.Resource().IsActive()
 }
 
 func (r RawVideo) validate() error {
 	if r.Extension == "" && r.IsActive() {
+		return domainerrors.RequiredProperty
+	}
+
+	if r.Resource().UploadURL == "" {
 		return domainerrors.RequiredProperty
 	}
 

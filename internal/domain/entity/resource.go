@@ -52,8 +52,20 @@ type NewResourceDto struct {
 	Size            int
 }
 
+func (r *resource) IsActive() bool {
+	return r.Status == ResourceStatusActive
+}
+
 func (resource *resource) validate() error {
 	if resource.VideoID == nil {
+		return domainerrors.RequiredProperty
+	}
+
+	if resource.Path == "" {
+		return domainerrors.RequiredProperty
+	}
+
+	if resource.Size == 0 && resource.IsActive() {
 		return domainerrors.RequiredProperty
 	}
 

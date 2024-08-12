@@ -15,8 +15,8 @@ func NewValidatedResource(rw ResourceWrapper) (ValidatedResource, error) {
 		return ValidatedResource{}, err
 	}
 
-	resource := rw.Resource()
-	err = resource.validate()
+	r := rw.Resource()
+	err = r.validate()
 
 	if err != nil {
 		return ValidatedResource{}, err
