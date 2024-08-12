@@ -47,7 +47,8 @@ func main() {
 }
 
 func setupMiddlewares(r *router.Router) {
-	r.Use(middleware.JSON)
+	r.Use(middleware.CORS)
 	r.Use(middleware.Error)
+	r.Use(middleware.JSON)
 	r.Use(middleware.Recover)
 }

@@ -2,13 +2,14 @@ package video
 
 import (
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/entity"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/gateway"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/domain/repo"
-	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/config/env"
 )
 
 type RegisterUseCase struct {
 	vr repo.VideosRepository
 	rr repo.ResourcesRepository
+	u  gateway.Uploader
 }
 
 type CreatedVideo struct {
@@ -35,18 +36,25 @@ func (r RegisterUseCase) Execute() (CreatedVideo, error) {
 		return CreatedVideo{}, err
 	}
 
+	prepared, err := r.u.Prepare(*video.ID)
+
+	if err != nil {
+		return CreatedVideo{}, err
+	}
+
 	r.vr.Save(vv)
 	r.rr.Save(vr)
 
 	return CreatedVideo{
 		ID:        vv.Video().ID.Value(),
-		UploadURL: env.Get("BASE_URL") + "/resources/" + raw.ID().Value() + "/upload",
+		UploadURL: prepared.URL,
 	}, nil
 }
 
-func NewRegisterUseCase(vr repo.VideosRepository, rr repo.ResourcesRepository) RegisterUseCase {
+func NewRegisterUseCase(vr repo.VideosRepository, rr repo.ResourcesRepository, u gateway.Uploader) RegisterUseCase {
 	return RegisterUseCase{
 		vr: vr,
 		rr: rr,
+		u:  u,
 	}
 }

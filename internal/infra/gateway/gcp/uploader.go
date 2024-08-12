@@ -3,6 +3,7 @@ package gcp
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"time"
 
 	"cloud.google.com/go/storage"
@@ -30,10 +31,14 @@ func (u Uploader) Prepare(videoID vo.UniqueEntityID) (gateway.PreparedUpload, er
 
 	defer client.Close()
 
+	params := url.Values{}
+	params.Add("uploadType", "resumable")
+
 	opts := &storage.SignedURLOptions{
-		Scheme:  storage.SigningSchemeV4,
-		Method:  "PUT",
-		Expires: time.Now().Add(time.Hour * 24),
+		Scheme:          storage.SigningSchemeV4,
+		Method:          "POST",
+		Expires:         time.Now().Add(time.Hour * 24),
+		QueryParameters: params,
 	}
 
 	url, err := client.Bucket(bucket).SignedURL(obj, opts)

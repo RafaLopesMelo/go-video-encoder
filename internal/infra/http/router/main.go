@@ -5,6 +5,7 @@ import (
 
 	"github.com/RafaLopesMelo/go-video-encoder/internal/app/usecase/hc"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/app/usecase/video"
+	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/gateway/gcp"
 	"github.com/RafaLopesMelo/go-video-encoder/internal/infra/repo/pg"
 )
 
@@ -26,7 +27,8 @@ func (r *Router) Setup() {
 	connection := pg.NewConnection()
 	rv := pg.NewVideosRepo(connection)
 	rr := pg.NewResourcesRepo(connection)
-	uc := video.NewRegisterUseCase(rv, rr)
+	u := gcp.NewUploader()
+	uc := video.NewRegisterUseCase(rv, rr, u)
 
 	r.addRoute("POST /videos", video.NewRegisterVideoController(uc).Handle)
 }
